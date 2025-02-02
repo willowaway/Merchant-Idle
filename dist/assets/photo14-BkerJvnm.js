@@ -1,1 +1,0 @@
-const o=""+new URL("media/photos/photo19.jpg",import.meta.url).href,t=""+new URL("media/photos/photo18@2x.jpg",import.meta.url).href,p=""+new URL("media/photos/photo14.jpg",import.meta.url).href;export{o as _,t as a,p as b};
