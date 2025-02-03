@@ -1,4 +1,4 @@
-# oneui-vue-edition
+# Merchant Idle
 
 This template should help get you started developing with Vue 3 in Vite.
 
@@ -32,4 +32,9 @@ npm run build
 
 ```sh
 npm run lint
+```
+
+### Push dist folder to gh-pages branch
+```sh
+git subtree push --prefix dist origin gh-pages
 ```
