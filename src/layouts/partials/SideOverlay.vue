@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { reactive, onMounted, onUnmounted } from "vue";
 import { useTemplateStore } from "@/stores/template";
 
@@ -30,7 +30,7 @@ const state = reactive({
 });
 
 // Close side overlay on ESCAPE key down
-function eventSideOverlay(event) {
+function eventSideOverlay(event: KeyboardEvent) {
   if (event.which === 27) {
     event.preventDefault();
     store.sideOverlay({ mode: "close" });
@@ -39,7 +39,10 @@ function eventSideOverlay(event) {
 
 // Init SimpleBar (custom scrolling) and attach ESCAPE key event listener
 onMounted(() => {
-  new SimpleBar(document.getElementById("side-overlay"));
+	const sidebar = document.getElementById("side-overlay");
+	if (sidebar) {
+		new SimpleBar(sidebar);
+	}
 
   document.addEventListener("keydown", eventSideOverlay);
 });

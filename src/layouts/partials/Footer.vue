@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { useTemplateStore } from "@/stores/template";
 
 // Main store

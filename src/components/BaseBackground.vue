@@ -1,9 +1,9 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from "vue";
 
 // Component properties
-const props = defineProps({
-  image: {
+const props = defineProps<{
+	image: {
     type: String,
     description: "The url of the image to show",
   },
@@ -27,7 +27,7 @@ const props = defineProps({
     default: false,
     description: "Set the background to fixed for a parallax effect",
   },
-});
+}>();
 
 // Set CSS classes accordingly
 const classContainer = computed(() => {
@@ -40,8 +40,9 @@ const classContainer = computed(() => {
 
 // Ser any inner classes if set
 const classContainerInner = computed(() => {
+	if (props)
   return {
-    [props.innerClass]: props.innerClass,
+    [props.innerClass as any]: props.innerClass,
   };
 });
 </script>

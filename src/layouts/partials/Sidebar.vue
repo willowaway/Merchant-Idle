@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { onMounted } from "vue";
 import { useTemplateStore } from "@/stores/template";
 
@@ -8,9 +8,9 @@ import BaseNavigation from "@/components/BaseNavigation.vue";
 import SimpleBar from "simplebar";
 
 // Grab menu navigation arrays
-import menu from "@/data/menu";
+import main from "@/data/menu";
 
-const navigation = menu.main;
+const navigation = main;
 
 // Component properties
 defineProps({
@@ -26,7 +26,10 @@ const store = useTemplateStore();
 
 // Init SimpleBar (custom scrolling)
 onMounted(() => {
-  new SimpleBar(document.getElementById("simplebar-sidebar"));
+	const sideBar = document.getElementById("simplebar-sidebar");
+	if (sideBar) {
+		new SimpleBar(sideBar);
+	}
 });
 </script>
 
@@ -53,7 +56,7 @@ onMounted(() => {
       <div class="content-header">
         <slot name="header">
           <!-- Logo -->
-          <RouterLink :to="{ name: 'landing' }" class="fw-semibold text-dual">
+          <RouterLink :to="{ name: 'login' }" class="fw-semibold text-dual">
             <span class="smini-visible">
               <i class="fa fa-circle-notch text-primary"></i>
             </span>

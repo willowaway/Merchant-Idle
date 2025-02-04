@@ -1,15 +1,12 @@
-<script setup>
+<script setup lang="ts">
+
 // Component properties
-defineProps({
-  title: {
-    type: String,
-    description: "The title of page heading section",
-  },
-  subtitle: {
-    type: String,
-    description: "The subtitle of page heading section",
-  },
-});
+defineProps<{
+	/** The title of page heading section */
+	title: string;
+	/** The subtitle of page heading section */
+	subtitle: string;
+}>();
 </script>
 
 <template>

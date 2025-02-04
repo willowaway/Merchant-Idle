@@ -1,185 +1,81 @@
-<script setup>
+<script setup lang="ts">
 import { reactive, computed } from "vue";
 
 // Component properties
-const props = defineProps({
-  tag: {
-    type: String,
-    default: "div",
-    description: "The HTML tag of the component (div, a)",
-  },
-  title: {
-    type: String,
-    description: "The title of the block",
-  },
-  subtitle: {
-    type: String,
-    description: "The subtitle of the block",
-  },
-  bordered: {
-    type: Boolean,
-    default: false,
-    description: "Bordered block style",
-  },
-  rounded: {
-    type: Boolean,
-    default: true,
-    description: "Rounded block style",
-  },
-  themed: {
-    type: Boolean,
-    default: false,
-    description: "Themed block style",
-  },
-  transparent: {
-    type: Boolean,
-    default: false,
-    description: "Transparent block style",
-  },
-  fxShadow: {
-    type: Boolean,
-    default: false,
-    description: "Shadow fx block style",
-  },
-  fxPop: {
-    type: Boolean,
-    default: false,
-    description: "Pop fx block style",
-  },
-  fxRotateRight: {
-    type: Boolean,
-    default: false,
-    description: "Rotate right fx block style",
-  },
-  fxRotateLeft: {
-    type: Boolean,
-    default: false,
-    description: "Rotate left fx block style",
-  },
-  linkShadow: {
-    type: Boolean,
-    default: false,
-    description: "Shadow style for block links",
-  },
-  linkPop: {
-    type: Boolean,
-    default: false,
-    description: "Pop style for block links",
-  },
-  linkRotate: {
-    type: Boolean,
-    default: false,
-    description: "Rotate style for block links",
-  },
-  headerClass: {
-    type: String,
-    description: "Add additional classes to default block-header",
-  },
-  optionsClass: {
-    type: String,
-    description: "Add additional classes to default block-options",
-  },
-  contentClass: {
-    type: String,
-    description: "Add additional classes to default block-content",
-  },
-  footerClass: {
-    type: String,
-    description: "Add additional classes to default block footer",
-  },
-  headerBg: {
-    type: Boolean,
-    default: true,
-    description: "Add the default header background",
-  },
-  headerRtl: {
-    type: Boolean,
-    default: false,
-    description: "Reverse the order of elements in header",
-  },
-  contentFull: {
-    type: Boolean,
-    default: false,
-    description: "Add full padding to the bottom of the default block-content",
-  },
-  ribbon: {
-    type: [Boolean, String],
-    default: false,
-    description:
-      "Enable the ribbon or enable it and also specify its content by setting a string value.",
-  },
-  ribbonLeft: {
-    type: Boolean,
-    default: false,
-    description: "Position ribbon to the left",
-  },
-  ribbonBottom: {
-    type: Boolean,
-    default: false,
-    description: "Position ribbon to the bottom",
-  },
-  ribbonBookmark: {
-    type: Boolean,
-    default: false,
-    description: "Set the bookmark type to your ribbon",
-  },
-  ribbonModern: {
-    type: Boolean,
-    default: false,
-    description: "Set the modern type to your ribbon",
-  },
-  ribbonVariant: {
-    type: String,
-    default: "primary",
-    description:
-      "Set a different ribbon variant (primary, info, warning, danger, success, glass)",
-  },
-  modeLoading: {
-    type: Boolean,
-    default: false,
-    description: "Loading block mode",
-  },
-  modeFullscreen: {
-    type: Boolean,
-    default: false,
-    description: "Fullscreen block mode",
-  },
-  modePinned: {
-    type: Boolean,
-    default: false,
-    description: "Pinned block mode",
-  },
-  modeContentHide: {
-    type: Boolean,
-    default: false,
-    description: "Hide block’s content",
-  },
-  modeHide: {
-    type: Boolean,
-    default: false,
-    description: "Hide block itself",
-  },
-  btnOptionFullscreen: {
-    type: Boolean,
-    defaul: false,
-    description: "Enable the fullscreen mode button",
-  },
-  btnOptionPinned: {
-    type: Boolean,
-    defaul: false,
-    description: "Enable the pinned mode button",
-  },
-  btnOptionContent: {
-    type: Boolean,
-    defaul: false,
-    description: "Enable the content toggle button",
-  },
-  btnOptionClose: {
-    type: Boolean,
-    defaul: false,
-    description: "Enable the close mode button",
-  },
-});
+const props = defineProps<{
+	/** The HTML tag of the component (div, a) */
+  tag: string;
+  /** The title of the block */
+  title: string;
+  /** The subtitle of the block */
+  subtitle: string;
+  /** Bordered block style */
+  bordered: boolean;
+  /** Rounded block style */
+  rounded: boolean;
+  /** Themed block style */
+  themed: boolean;
+  /** Transparent block style */
+  transparent: boolean;
+  /** Shadow fx block style */
+  fxShadow: boolean;
+  /** Pop fx block style */
+  fxPop: boolean;
+  /** Rotate right fx block style */
+  fxRotateRight: boolean;
+  /** Rotate left fx block style */
+  fxRotateLeft: boolean;
+  /** Shadow style for block links */
+  linkShadow: boolean;
+  /** Pop style for block links */
+  linkPop: boolean;
+  /** Rotate style for block links */
+  linkRotate: boolean;
+  /** Add additional classes to default block-header */
+  headerClass: string;
+  /** Add additional classes to default block-options */
+  optionsClass: string;
+  /** Add additional classes to default block-content */
+  contentClass: string;
+  /** Add additional classes to default block footer */
+  footerClass: string;
+  /** Add the default header background */
+  headerBg: boolean;
+  /** Reverse the order of elements in header */
+  headerRtl: boolean;
+  /** Add full padding to the bottom of the default block-content */
+  contentFull: boolean;
+  /** Enable the ribbon or enable it and also specify its content by setting a string value. */
+  ribbon: boolean | string;
+  /** Position ribbon to the left */
+  ribbonLeft: boolean;
+  /** Position ribbon to the bottom */
+  ribbonBottom: boolean;
+  /** Set the bookmark type to your ribbon */
+  ribbonBookmark: boolean;
+  /** Set the modern type to your ribbon */
+  ribbonModern: boolean;
+  /** Set a different ribbon variant (primary, info, warning, danger, success, glass) */
+  ribbonVariant: boolean;
+  /** Loading block mode */
+  modeLoading: boolean;
+  /** Fullscreen block mode */
+  modeFullscreen: boolean;
+  /** Pinned block mode */
+  modePinned: boolean;
+  /** Hide block’s content */
+  modeContentHide: boolean;
+  /** Hide block itself */
+  modeHide: boolean;
+  /** Enable the fullscreen mode button */
+  btnOptionFullscreen: boolean;
+  /** Enable the pinned mode button */
+  btnOptionPinned: boolean;
+  /** Enable the content toggle button */
+  btnOptionContent: boolean;
+  /** Enable the close mode button */
+  btnOptionClose: boolean;
+}>();
 
 // Reactive state
 const state = reactive({
@@ -305,7 +201,7 @@ function statusToggle() {
   state.optionLoading = !state.optionLoading;
 }
 
-function statusLoading(mode, timeout) {
+function statusLoading(mode: string, timeout: number) {
   state.optionLoading = true;
 
   if (mode === "demo") {

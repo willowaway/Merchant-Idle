@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import { useTemplateStore } from "@/stores/template";
@@ -19,7 +19,7 @@ function onSubmitSearch() {
 }
 
 // When ESCAPE key is hit close the header search section
-function eventHeaderSearch(event) {
+function eventHeaderSearch(event: KeyboardEvent) {
   if (event.which === 27) {
     event.preventDefault();
     store.headerSearch({ mode: "off" });

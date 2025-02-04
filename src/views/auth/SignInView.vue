@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useTemplateStore } from "@/stores/template";

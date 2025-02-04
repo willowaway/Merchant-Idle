@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { computed, onMounted } from "vue";
 import { useTemplateStore } from "@/stores/template";
 
@@ -23,10 +23,12 @@ const store = useTemplateStore();
 // Set dark mode based on localStorage or on store settings (if not saved before)
 const savedDarkMode = localStorage.getItem("oneuiVueDarkMode");
 
-if (["on", "off", "system"].includes(savedDarkMode)) {
-  store.darkMode({ mode: savedDarkMode });
-} else {
-  store.darkMode({ mode: store.settings.darkMode });
+if (savedDarkMode != null) {
+	if (["on", "off", "system"].includes(savedDarkMode)) {
+	store.darkMode({ mode: savedDarkMode });
+	} else {
+	store.darkMode({ mode: store.settings.darkMode });
+	}
 }
 
 // Set color theme based on localStorage or on store settings (if not saved before)
@@ -74,7 +76,7 @@ onMounted(() => {
     });
 
   // Remove side transitions on window resizing
-  let winResize = false;
+  let winResize = 0;
 
   window.addEventListener("resize", () => {
     clearTimeout(winResize);
