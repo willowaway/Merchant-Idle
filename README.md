@@ -38,3 +38,4 @@ npm run lint
 ```sh
 git subtree push --prefix dist origin gh-pages
 ```
+https://gist.github.com/chrisjacob/825950
