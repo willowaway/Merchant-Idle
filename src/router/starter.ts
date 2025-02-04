@@ -14,7 +14,7 @@ const ShopView= () => import("@/views/starter/ShopView.vue");
 // Set all routes
 const routes = [
   {
-    path: "/",
+    path: "",
     component: LoginLayout,
     children: [
       {
@@ -50,7 +50,7 @@ const routes = [
 
 // Create Router
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory("/Merchant-Idle/"),
   linkActiveClass: "active",
   linkExactActiveClass: "active",
   scrollBehavior() {

@@ -14,7 +14,13 @@ import * as bootstrap from "bootstrap";
 window.bootstrap = bootstrap;
 
 // Craft new application
-const app = createApp(App);
+const app = createApp(App, {created() {
+	if (sessionStorage.redirect) {
+		const redirect = sessionStorage.redirect
+		delete sessionStorage.redirect
+		router.push(redirect)
+	}
+}});
 
 // Register global components
 app.component("BaseBlock", BaseBlock);

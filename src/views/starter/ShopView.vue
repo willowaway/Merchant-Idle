@@ -5,7 +5,7 @@
     <template #extra>
       <button type="button" class="btn btn-alt-primary">
         <i class="fa fa-plus opacity-50 me-1"></i>
-        New Project
+        Shop
       </button>
     </template>
   </BasePageHeading>
