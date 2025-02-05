@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview --port 5050"
+    "preview": "vite preview --port 5050",
+	"cloud-script": "tsc -p ./src/cloud-script/tsconfig.json"
   },
   "browserslist": [
     ">= 0.5%",

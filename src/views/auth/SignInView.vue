@@ -2,50 +2,69 @@
 import { reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useTemplateStore } from "@/stores/template";
+import { useMainStore } from "@/stores/main";
 
 // Vuelidate, for more info and examples you can check out https://github.com/vuelidate/vuelidate
 import useVuelidate from "@vuelidate/core";
 import { required, minLength } from "@vuelidate/validators";
+import { PlayFabHelper } from "@/shared/playfab";
 
 // Main store and Router
-const store = useTemplateStore();
+const template = useTemplateStore();
+const main = useMainStore();
 const router = useRouter();
 
 // Input state variables
 const state = reactive({
-  username: null,
-  password: null,
+	username: null,
+	password: null,
 });
 
 // Validation rules
 const rules = computed(() => {
-  return {
-    username: {
-      required,
-      minLength: minLength(3),
-    },
-    password: {
-      required,
-      minLength: minLength(5),
-    },
-  };
+	return {
+		username: {
+			required,
+			minLength: minLength(3),
+		},
+		password: {
+			required,
+			minLength: minLength(5),
+		},
+	};
 });
+
+const onPageNothing = function() {}
+
+const onLoginComplete = function(player: PlayFabClientModels.LoginResult) {
+	main.setPlayerId(player.PlayFabId);
+	main.setPlayerName(state.username);
+
+	if (player.NewlyCreated) {
+		PlayFabHelper.UpdateUserTitleDisplayName(state.username, onPageNothing, onPageError);
+	}
+}
+
+const onPageError = function(message: string) {
+	console.error(message);
+}
 
 // Use vuelidate
 const v$ = useVuelidate(rules, state);
 
-
 // On form submission
 async function onSubmit() {
-  const result = await v$.value.$validate();
+	const result = await v$.value.$validate();
 
-  if (!result) {
-    // notify user form is invalid
-    return;
-  }
+	if (!result) {
+		// notify user form is invalid
+		return;
+	}
+	console.log("state.username:" + state.username);
+	PlayFabHelper.LoginWithCustomID("602A2", state.username, onLoginComplete, onPageError);
 
-  // Go to dashboard
-  router.push({ name: "stash" });
+	// Go to dashboard
+	router.push({ name: "stash" });
 }
 </script>
 
@@ -149,8 +168,8 @@ async function onSubmit() {
         </div>
       </div>
       <div class="fs-sm text-muted text-center">
-        <strong>{{ store.app.name + " " + store.app.version }}</strong> &copy;
-        {{ store.app.copyright }}
+        <strong>{{ template.app.name + " " + template.app.version }}</strong> &copy;
+        {{ template.app.copyright }}
       </div>
     </div>
   </div>
