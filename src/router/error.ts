@@ -3,7 +3,7 @@ import router from "@/router/router";
 import { useTemplateStore } from "@/stores/template";
 import type { FirebaseError } from "firebase/app";
 
-const onPageError = function(error: FirebaseError)
+const onPageFirebaseError = function(error: FirebaseError)
 {
 	if (error.code && error.message) {
 		
@@ -40,4 +40,4 @@ const onPageError = function(error: FirebaseError)
 	}
 }
 
-export default onPageError;
+export default onPageFirebaseError;

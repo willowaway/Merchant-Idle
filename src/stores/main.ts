@@ -1,13 +1,15 @@
 import { defineStore } from 'pinia';
 
 interface IApplicationState {
-	playerName: string | undefined;
+	username: string | undefined;
 	userId: string | undefined;
+	email: string | undefined;
 	playerHP: number | undefined;
 }
 
 const initialState: IApplicationState = {
-	playerName: undefined,
+	username: undefined,
+	email: undefined,
 	userId: undefined,
 	playerHP: undefined,
 };
@@ -17,7 +19,10 @@ export const useMainStore = defineStore('main', {
 
 	actions: {
 		setPlayerName(playerName: string) {
-			this.playerName = playerName;
+			this.username = playerName;
+		},
+		setEmail(email: string) {
+			this.email = email;
 		},
 		setUserId(playerId: string) {
 			this.userId = playerId;
@@ -26,7 +31,7 @@ export const useMainStore = defineStore('main', {
 			this.playerHP = playerHP;
 		},
 		playerLogOut() {
-			this.playerName = initialState.playerName;
+			this.username = initialState.username;
 			this.userId = initialState.userId;
 			this.playerHP = initialState.playerHP;
 		}

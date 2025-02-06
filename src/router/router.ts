@@ -7,8 +7,8 @@ import GameLayout from "@/layouts/variations/GameLayout.vue";
 import SimpleLayout from "@/layouts/variations/SimpleLayout.vue";
 
 // Frontend: Landing
-const StashView = () => import("@/views/starter/StashView.vue");
-const ShopView= () => import("@/views/starter/ShopView.vue");
+const StashView = () => import("@/views/tabs/StashView.vue");
+const ShopView= () => import("@/views/tabs/ShopView.vue");
 
 // Auth
 const AuthSignIn = () => import("@/views/auth/SignInView.vue");
@@ -128,9 +128,9 @@ const router = createRouter({
 NProgress.configure({ showSpinner: false });
 
 router.beforeResolve((to, from, next) => {
-	console.log(`to: ${to} from: ${from}`);
-  NProgress.start();
-  next();
+	console.log(`to: ${to.fullPath} from: ${from.fullPath}`);
+	NProgress.start();
+	next();
 });
 
 router.afterEach(() => {

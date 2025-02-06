@@ -63,7 +63,7 @@ async function logOut() {
           <!-- User Info -->
           <div class="ms-2">
             <a class="text-dark fw-semibold fs-sm" href="javascript:void(0)"
-              >{{ main.playerName }}</a
+              >{{ main.username }}</a
             >
           </div>
           <!-- END User Info -->

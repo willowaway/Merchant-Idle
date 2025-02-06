@@ -7,10 +7,14 @@ import { useTemplateStore } from "@/stores/template";
 import useVuelidate from "@vuelidate/core";
 import { required, minLength, email, sameAs } from "@vuelidate/validators";
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import onPageError from "@/router/error";
+import onPageFirebaseError from "@/router/error";
+import { collection, addDoc, doc, setDoc } from "firebase/firestore"; 
+import db from "@/firebase/db";
+import { useMainStore } from "@/stores/main";
 
 // Main store and Router
 const store = useTemplateStore();
+const main = useMainStore();
 const router = useRouter();
 
 // Input state variables
@@ -70,14 +74,23 @@ async function onSubmit() {
 				displayName: state.username
 			}).then(() => {
 				console.log(`Profile updated displayName: ${state.username}`)
-				router.push({name: "signin"});
-			}).catch(onPageError);
+
+				try {
+					setDoc(doc(db, "users", user.uid), {
+						username: state.username,
+						email: state.email
+					});
+				}catch(error){
+					console.error(error);
+				}
+
+			}).catch(onPageFirebaseError);
 		})
 		.catch((error) => {
 			if (error.code === "auth/email-already-in-use") {
 				state.errorMessage = "Email already in use";
 			} else {
-				onPageError(error);
+				onPageFirebaseError(error);
 			}
 		});
 }

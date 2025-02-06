@@ -9,6 +9,10 @@ import BaseBlock from "@/components/BaseBlock.vue";
 import BaseBackground from "@/components/BaseBackground.vue";
 import BasePageHeading from "@/components/BasePageHeading.vue";
 
+import '@/firebase/firebase-app';
+import '@/firebase/db';
+import '@/firebase/auth';
+
 // Bootstrap framework
 import * as bootstrap from "bootstrap";
 window.bootstrap = bootstrap;

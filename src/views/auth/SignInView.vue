@@ -1,16 +1,19 @@
 <script setup lang="ts">
 import { reactive, computed } from "vue";
 import { useTemplateStore } from "@/stores/template";
+import router from "@/router/router";
 
 // Vuelidate, for more info and examples you can check out https://github.com/vuelidate/vuelidate
 import useVuelidate from "@vuelidate/core";
 import { required, minLength, email } from "@vuelidate/validators";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import onPageError from "@/router/error";
+import onPageFirebaseError from "@/router/error";
 import type { FirebaseError } from "firebase/app";
+import { useMainStore } from "@/stores/main";
 
 // Main store and Router
 const template = useTemplateStore();
+const main = useMainStore();
 
 // Input state variables
 const state = reactive({
@@ -50,13 +53,18 @@ async function onSubmit() {
 	signInWithEmailAndPassword(auth, state.email, state.password)
 		.then((userCredential) => {
 			const user = userCredential.user;
-			console.log(`user: ${user}`);
+			main.setUserId(user.uid);
+			if (user.displayName) {
+				main.setPlayerName(user.displayName);
+			}
+
+			router.push({name: "stash"});
 		})
 		.catch((error: FirebaseError) => {
 			if (error.code === "auth/invalid-credential") {
 				state.errorMessage = "Invalid credentials";
 			} else {
-				onPageError(error);
+				onPageFirebaseError(error);
 			}
 		});
 
