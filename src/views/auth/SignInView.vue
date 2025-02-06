@@ -1,30 +1,30 @@
 <script setup lang="ts">
 import { reactive, computed } from "vue";
-import { useRouter } from "vue-router";
 import { useTemplateStore } from "@/stores/template";
-import { useMainStore } from "@/stores/main";
 
 // Vuelidate, for more info and examples you can check out https://github.com/vuelidate/vuelidate
 import useVuelidate from "@vuelidate/core";
-import { required, minLength } from "@vuelidate/validators";
-import { PlayFabHelper } from "@/shared/playfab";
+import { required, minLength, email } from "@vuelidate/validators";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import onPageError from "@/router/error";
+import type { FirebaseError } from "firebase/app";
 
 // Main store and Router
 const template = useTemplateStore();
-const main = useMainStore();
-const router = useRouter();
 
 // Input state variables
 const state = reactive({
-	username: null,
+	email: null,
 	password: null,
+	errorMessage: ''
 });
 
 // Validation rules
 const rules = computed(() => {
 	return {
-		username: {
+		email: {
 			required,
+			email,
 			minLength: minLength(3),
 		},
 		password: {
@@ -34,21 +34,6 @@ const rules = computed(() => {
 	};
 });
 
-const onPageNothing = function() {}
-
-const onLoginComplete = function(player: PlayFabClientModels.LoginResult) {
-	main.setPlayerId(player.PlayFabId);
-	main.setPlayerName(state.username);
-
-	if (player.NewlyCreated) {
-		PlayFabHelper.UpdateUserTitleDisplayName(state.username, onPageNothing, onPageError);
-	}
-}
-
-const onPageError = function(message: string) {
-	console.error(message);
-}
-
 // Use vuelidate
 const v$ = useVuelidate(rules, state);
 
@@ -56,15 +41,25 @@ const v$ = useVuelidate(rules, state);
 async function onSubmit() {
 	const result = await v$.value.$validate();
 
-	if (!result) {
+	if (!result || !state.email || !state.password) {
 		// notify user form is invalid
 		return;
 	}
-	console.log("state.username:" + state.username);
-	PlayFabHelper.LoginWithCustomID("602A2", state.username, onLoginComplete, onPageError);
 
-	// Go to dashboard
-	router.push({ name: "stash" });
+	const auth = getAuth();
+	signInWithEmailAndPassword(auth, state.email, state.password)
+		.then((userCredential) => {
+			const user = userCredential.user;
+			console.log(`user: ${user}`);
+		})
+		.catch((error: FirebaseError) => {
+			if (error.code === "auth/invalid-credential") {
+				state.errorMessage = "Invalid credentials";
+			} else {
+				onPageError(error);
+			}
+		});
+
 }
 </script>
 
@@ -78,12 +73,12 @@ async function onSubmit() {
           <BaseBlock title="Sign In" class="mb-0">
             <template #options>
               <RouterLink
-                :to="{ name: 'auth-reminder' }"
+                :to="{ name: 'reminder' }"
                 class="btn-block-option fs-sm"
                 >Forgot Password?</RouterLink
               >
               <RouterLink
-                :to="{ name: 'auth-signup' }"
+                :to="{ name: 'signup' }"
                 class="btn-block-option"
               >
                 <i class="fa fa-user-plus"></i>
@@ -101,20 +96,20 @@ async function onSubmit() {
                     <input
                       type="text"
                       class="form-control form-control-alt form-control-lg"
-                      id="login-username"
-                      name="login-username"
-                      placeholder="Username"
+                      id="login-email"
+                      name="login-email"
+                      placeholder="Email"
                       :class="{
-                        'is-invalid': v$.username.$errors.length,
+                        'is-invalid': v$.email.$errors.length,
                       }"
-                      v-model="state.username"
-                      @blur="v$.username.$touch"
+                      v-model="state.email"
+                      @blur="v$.email.$touch"
                     />
                     <div
-                      v-if="v$.username.$errors.length"
+                      v-if="v$.email.$errors.length"
                       class="invalid-feedback animated fadeIn"
                     >
-                      Please enter your username
+                      Please enter your email
                     </div>
                   </div>
                   <div class="mb-4">
@@ -152,13 +147,14 @@ async function onSubmit() {
                     </div>
                   </div>
                 </div>
-                <div class="row mb-4">
-                  <div class="col-md-6 col-xl-5">
+                <div class="mb-4">
                     <button type="submit" class="btn w-100 btn-alt-primary">
                       <i class="fa fa-fw fa-sign-in-alt me-1 opacity-50"></i>
                       Sign In
                     </button>
-                  </div>
+					<Transition name="fade">
+						<span v-if="state.errorMessage">{{ state.errorMessage }}</span>
+					</Transition>
                 </div>
               </form>
               <!-- END Sign In Form -->

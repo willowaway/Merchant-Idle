@@ -24,7 +24,7 @@
       <div class="col-md-6 col-xxl-4">
         <!-- Sign In -->
         <RouterLink
-          :to="{ name: 'auth-signin' }"
+          :to="{ name: 'signin' }"
           custom
           v-slot="{ href, navigate }"
         >
@@ -42,7 +42,7 @@
       <div class="col-md-6 col-xxl-4">
         <!-- Sign Up -->
         <RouterLink
-          :to="{ name: 'auth-signup' }"
+          :to="{ name: 'signup' }"
           custom
           v-slot="{ href, navigate }"
         >
@@ -78,7 +78,7 @@
       <div class="col-md-6 col-xxl-4">
         <!-- Password Reminder -->
         <RouterLink
-          :to="{ name: 'auth-reminder' }"
+          :to="{ name: 'reminder' }"
           custom
           v-slot="{ href, navigate }"
         >

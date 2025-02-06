@@ -26,9 +26,6 @@ store.mainContent({ mode: "narrow" });
     <!-- Side Overlay Content -->
     <!-- Using the available v-slot, we can override the default Side Overlay content from layouts/partials/SideOvelay.vue -->
     <template #side-overlay-content>
-      <div class="content-side">
-        <p>Side Overlay content..</p>
-      </div>
     </template>
     <!-- END Side Overlay Content -->
 

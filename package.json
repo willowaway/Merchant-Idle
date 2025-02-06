@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview --port 5050",
-	"cloud-script": "tsc -p ./src/cloud-script/tsconfig.json"
+    "preview": "vite preview --port 5050"
   },
   "browserslist": [
     ">= 0.5%",
@@ -26,9 +25,9 @@
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.4",
     "bootstrap": "5.3.3",
+    "firebase": "^11.2.0",
     "nprogress": "^0.2.0",
     "pinia": "^2.2.4",
-    "playfab-web-sdk": "^1.185.250117",
     "simplebar": "^6.2.7",
     "vue": "^3.5.13",
     "vue-router": "^4.4.5"

@@ -56,7 +56,7 @@ onMounted(() => {
       <div class="content-header">
         <slot name="header">
           <!-- Logo -->
-          <RouterLink :to="{ name: 'auth-signin' }" class="fw-semibold text-dual">
+          <RouterLink :to="{ name: 'signin' }" class="fw-semibold text-dual">
             <span class="smini-visible">
               <i class="fa fa-circle-notch text-primary"></i>
             </span>

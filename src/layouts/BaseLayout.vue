@@ -8,6 +8,10 @@ import BaseSidebar from "@/layouts/partials/Sidebar.vue";
 import BaseSideOverlay from "@/layouts/partials/SideOverlay.vue";
 import BaseFooter from "@/layouts/partials/Footer.vue";
 
+import '@/firebase/firebase-app';
+import '@/firebase/db';
+import '@/firebase/auth';
+
 // Component properties
 defineProps({
   sidebarWithMiniNav: {

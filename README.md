@@ -1,6 +1,6 @@
 # Merchant Idle
 
-This template should help get you started developing with Vue 3 in Vite.
+https://willowaway.github.io/Merchant-Idle/
 
 ## Recommended IDE Setup
 

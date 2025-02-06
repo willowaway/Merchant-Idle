@@ -15,6 +15,15 @@ const AuthSignIn = () => import("@/views/auth/SignInView.vue");
 const AuthSignUp = () => import("@/views/auth/SignUpView.vue");
 const AuthReminder = () => import("@/views/auth/ReminderView.vue");
 
+// Errors
+const ErrorView = () => import("@/views/errors/ErrorView.vue");
+const Error400 = () => import("@/views/errors/400View.vue");
+const Error401 = () => import("@/views/errors/401View.vue");
+const Error403 = () => import("@/views/errors/403View.vue");
+const Error404 = () => import("@/views/errors/404View.vue");
+const Error500 = () => import("@/views/errors/500View.vue");
+const Error503 = () => import("@/views/errors/503View.vue");
+
 // Set all routes
 const routes = [
 	{
@@ -23,17 +32,17 @@ const routes = [
 		children: [
 			{
 				path: "",
-				name: "auth-signin",
+				name: "signin",
 				component: AuthSignIn,
 			},
 			{
 				path: "signup",
-				name: "auth-signup",
+				name: "signup",
 				component: AuthSignUp,
 			},
 			{
 				path: "reminder",
-				name: "auth-reminder",
+				name: "reminder",
 				component: AuthReminder,
 			},
 		],
@@ -59,7 +68,48 @@ const routes = [
 				component: ShopView,
 			},
 		],
-	}
+	},
+	{
+		path: "/error",
+		component: SimpleLayout,
+		children: [
+			{
+				path: "generic",
+				name: "error",
+				component: ErrorView,
+			},
+			{
+				path: "400",
+				name: "error-400",
+				component: Error400,
+			},
+			{
+				path: "401",
+				name: "error-401",
+				component: Error401,
+			},
+			{
+				path: "403",
+				name: "error-403",
+				component: Error403,
+			},
+			{
+				path: "404",
+				name: "error-404",
+				component: Error404,
+			},
+			{
+				path: "500",
+				name: "error-500",
+				component: Error500,
+			},
+			{
+				path: "503",
+				name: "error-503",
+				component: Error503,
+			},
+		],
+	  },
 ];
 
 // Create Router
@@ -78,9 +128,7 @@ const router = createRouter({
 NProgress.configure({ showSpinner: false });
 
 router.beforeResolve((to, from, next) => {
-	if (to && from){
-		console.log("to");
-	}
+	console.log(`to: ${to} from: ${from}`);
   NProgress.start();
   next();
 });

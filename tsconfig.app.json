@@ -8,10 +8,10 @@
 	"allowJs": true,
     /* Linting */
     "strict": true,
-	"strictNullChecks": false,
-	"verbatimModuleSyntax": false,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
+	"strictNullChecks": true,
+	"verbatimModuleSyntax": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },

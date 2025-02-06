@@ -161,7 +161,7 @@ onUnmounted(() => {
                       <span class="fs-sm fw-medium">Lock Account</span>
                     </RouterLink>
                     <RouterLink
-                      :to="{ name: 'auth-signin' }"
+                      :to="{ name: 'signin' }"
                       class="dropdown-item d-flex align-items-center justify-content-between"
                     >
                       <span class="fs-sm fw-medium">Log Out</span>

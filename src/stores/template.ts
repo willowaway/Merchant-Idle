@@ -22,6 +22,10 @@ export const useTemplateStore = defineStore({
 			footer: true,
 		},
 
+		// Error
+		errorCode: "",
+		errorMessage: "",
+
 		// Default template settings
 		// Various of them are also set in each layout variation under layouts/variations/ folder
 		settings: {

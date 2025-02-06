@@ -54,7 +54,7 @@ async function onSubmit() {
             <BaseBlock title="Account Locked" class="shadow-none mb-0">
               <template #options>
                 <RouterLink
-                  :to="{ name: 'auth-signin' }"
+                  :to="{ name: 'signin' }"
                   class="btn-block-option"
                 >
                   <i class="fa fa-sign-in-alt"></i>

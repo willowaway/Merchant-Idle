@@ -1,31 +1,15 @@
 import { defineStore } from 'pinia';
-import { ITitleDataEnemies } from "../shared/types";
-import { IEquipmentSlots } from "./types";
 
 interface IApplicationState {
-	playerName: string;
-	playerId: string;
-	hasPlayerId: boolean;
-	playerHP: number;
-	catalog: PlayFabClientModels.CatalogItem[];
-	inventory: PlayFabClientModels.GetUserInventoryResult;
-	stores: PlayFabClientModels.GetStoreItemsResult[];
-	enemies: ITitleDataEnemies;
-	storeNames: string[];
-	equipment: IEquipmentSlots;
+	playerName: string | undefined;
+	userId: string | undefined;
+	playerHP: number | undefined;
 }
 
 const initialState: IApplicationState = {
-	playerName: null,
-	playerId: undefined,
-	hasPlayerId: false,
-	playerHP: 0,
-	catalog: null,
-	inventory: null,
-	stores: null,
-	enemies: null,
-	storeNames: null,
-	equipment: null,
+	playerName: undefined,
+	userId: undefined,
+	playerHP: undefined,
 };
 
 export const useMainStore = defineStore('main', {
@@ -35,38 +19,16 @@ export const useMainStore = defineStore('main', {
 		setPlayerName(playerName: string) {
 			this.playerName = playerName;
 		},
-		setPlayerId(playerId: string) {
-			this.playerId = playerId;
-			this.hasPlayerId = true;
+		setUserId(playerId: string) {
+			this.userId = playerId;
 		},
 		setPlayerHP(playerHP: number) {
 			this.playerHP = playerHP;
 		},
-		setCatalog(catalog: PlayFabClientModels.CatalogItem[]) {
-			this.catalog = catalog;
-		},
-		setInventory(inventory: PlayFabClientModels.GetUserInventoryResult) {
-			this.inventory = inventory;
-		},
-		setStores(stores: PlayFabClientModels.GetStoreItemsResult[]) {
-			this.stores = stores;
-		},
-		setEnemies(enemies: ITitleDataEnemies) {
-			this.enemies = enemies;
-		},
-		setStoreNames(storeNames: string[]) {
-			this.storeNames = storeNames;
-		},
-		setEquipment(equipment: IEquipmentSlots) {
-			this.equipment = equipment;
-		},
 		playerLogOut() {
 			this.playerName = initialState.playerName;
-			this.playerId = initialState.playerId;
-			this.hasPlayerId = initialState.hasPlayerId;
+			this.userId = initialState.userId;
 			this.playerHP = initialState.playerHP;
-			this.inventory = initialState.inventory;
-			this.equipment = initialState.equipment;
 		}
 	},
 });

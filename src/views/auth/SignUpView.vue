@@ -6,6 +6,8 @@ import { useTemplateStore } from "@/stores/template";
 // Vuelidate, for more info and examples you can check out https://github.com/vuelidate/vuelidate
 import useVuelidate from "@vuelidate/core";
 import { required, minLength, email, sameAs } from "@vuelidate/validators";
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import onPageError from "@/router/error";
 
 // Main store and Router
 const store = useTemplateStore();
@@ -18,6 +20,7 @@ const state = reactive({
   password: null,
   confirmPassword: null,
   terms: null,
+  errorMessage: ''
 });
 
 // Validation rules
@@ -50,15 +53,33 @@ const v$ = useVuelidate(rules, state);
 
 // On form submission
 async function onSubmit() {
-  const result = await v$.value.$validate();
+	const result = await v$.value.$validate();
 
-  if (!result) {
-    // notify user form is invalid
-    return;
-  }
+	if (!result || !state.email || !state.password) {
+		// notify user form is invalid
+		return;
+	}
 
-  // Go to dashboard
-  router.push({ name: "backend-pages-auth" });
+	const auth = getAuth();
+	createUserWithEmailAndPassword(auth, state.email, state.password)
+		.then((userCredentials) => {
+			const user = userCredentials.user;
+			console.log(`Account created for ${user.email}`);
+
+			updateProfile(user, {
+				displayName: state.username
+			}).then(() => {
+				console.log(`Profile updated displayName: ${state.username}`)
+				router.push({name: "signin"});
+			}).catch(onPageError);
+		})
+		.catch((error) => {
+			if (error.code === "auth/email-already-in-use") {
+				state.errorMessage = "Email already in use";
+			} else {
+				onPageError(error);
+			}
+		});
 }
 </script>
 
@@ -79,7 +100,7 @@ async function onSubmit() {
                 >View Terms</a
               >
               <RouterLink
-                :to="{ name: 'auth-signin' }"
+                :to="{ name: 'signin' }"
                 class="btn-block-option"
               >
                 <i class="fa fa-sign-in-alt"></i>
@@ -205,6 +226,9 @@ async function onSubmit() {
                     <button type="submit" class="btn w-100 btn-alt-success">
                       <i class="fa fa-fw fa-plus me-1 opacity-50"></i> Sign Up
                     </button>
+					<Transition name="fade">
+						<span v-if="state.errorMessage">{{ state.errorMessage }}</span>
+					</Transition>
                   </div>
                 </div>
               </form>
