@@ -15,6 +15,7 @@ import '@/firebase/auth';
 
 // Bootstrap framework
 import * as bootstrap from "bootstrap";
+import { toast } from './errors/toast';
 window.bootstrap = bootstrap;
 
 // Craft new application
@@ -34,6 +35,15 @@ app.component("BasePageHeading", BasePageHeading);
 // Use Pinia and Vue Router
 app.use(createPinia());
 app.use(router);
+
+app.config.errorHandler = (err, instance, info) => {
+	toast.error(`Error: ${err}\nAdditional info: ${info}`)
+	console.error(`Error: ${err}\nAdditional info: ${info}`, err);
+}
+app.config.warnHandler = function(msg, instance, trace) {
+	toast.warn(`Warn: ${msg}\nTrace: ${trace}`);
+	console.warn(`Warn: ${msg}\nTrace: ${trace}`, msg);
+}
 
 // ..and finally mount it!
 app.mount("#app");

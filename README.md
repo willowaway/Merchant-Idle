@@ -39,3 +39,4 @@ npm run lint
 git subtree push --prefix dist origin gh-pages
 ```
 https://gist.github.com/chrisjacob/825950
+https://stackoverflow.com/questions/53648652/how-to-use-environment-variables-in-github-page
