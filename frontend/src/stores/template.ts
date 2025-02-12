@@ -70,7 +70,7 @@ export const useTemplateStore = defineStore({
 					this.settings.sidebarVisibleDesktop = false;
 				} else if (payload.mode === "toggle") {
 					this.settings.sidebarVisibleDesktop =
-						!this.settings.sidebarVisibleDesktop;
+            !this.settings.sidebarVisibleDesktop;
 				}
 			} else {
 				if (payload.mode === "open") {
@@ -79,7 +79,7 @@ export const useTemplateStore = defineStore({
 					this.settings.sidebarVisibleMobile = false;
 				} else if (payload.mode === "toggle") {
 					this.settings.sidebarVisibleMobile =
-						!this.settings.sidebarVisibleMobile;
+            !this.settings.sidebarVisibleMobile;
 				}
 			}
 		},
@@ -133,7 +133,7 @@ export const useTemplateStore = defineStore({
 				this.settings.sideOverlayHoverable = false;
 			} else if (payload.mode === "toggle") {
 				this.settings.sideOverlayHoverable =
-				!this.settings.sideOverlayHoverable;
+          !this.settings.sideOverlayHoverable;
 			}
 		},
 		// Sets page overlay visibility (on, off, toggle)
@@ -212,26 +212,26 @@ export const useTemplateStore = defineStore({
 				const lHtml = document.documentElement;
 
 				if (payload.mode === "on") {
-				this.settings.darkMode = "on";
-				this.settings.darkModeActive = true;
-				lHtml.classList.add("dark");
-				} else if (payload.mode === "off") {
-				this.settings.darkMode = "off";
-				this.settings.darkModeActive = false;
-				lHtml.classList.remove("dark");
-				} else if (payload.mode === "system") {
-				this.settings.darkMode = "system";
-
-				if (
-					window.matchMedia &&
-					window.matchMedia("(prefers-color-scheme: dark)").matches
-				) {
+					this.settings.darkMode = "on";
 					this.settings.darkModeActive = true;
 					lHtml.classList.add("dark");
-				} else {
+				} else if (payload.mode === "off") {
+					this.settings.darkMode = "off";
 					this.settings.darkModeActive = false;
 					lHtml.classList.remove("dark");
-				}
+				} else if (payload.mode === "system") {
+					this.settings.darkMode = "system";
+
+					if (
+						window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+					) {
+						this.settings.darkModeActive = true;
+						lHtml.classList.add("dark");
+					} else {
+						this.settings.darkModeActive = false;
+						lHtml.classList.remove("dark");
+					}
 				}
 
 				localStorage.setItem("oneuiVueDarkMode", this.settings.darkMode);
@@ -242,7 +242,7 @@ export const useTemplateStore = defineStore({
 			const lHtml = document.documentElement;
 
 			// Matches all classes which start with 'theme-'
-			let regx = new RegExp("\\btheme-[^ ]*[ ]?\\b", "g");
+			const regx = new RegExp("\\btheme-[^ ]*[ ]?\\b", "g");
 
 			// Set new theme
 			this.settings.colorTheme = payload.theme || "";

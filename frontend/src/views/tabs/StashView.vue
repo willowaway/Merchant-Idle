@@ -1,49 +1,38 @@
 <script setup lang="ts">
 import { reactive } from "vue";
-import { collection, addDoc, setDoc, getDocs, doc, query, where, type FirestoreDataConverter, type QueryDocumentSnapshot } from "firebase/firestore"; 
-import db from "@/firebase/db";
 import { useMainStore } from "@/stores/main";
-import { watch } from 'vue';
-import type Stash from "@/firebase/interfaces/Stash"
-import { converter } from "@/firebase/converter";
+import { watch } from "vue";
+import type { Stash } from "merchant-idle-middleware";
+import StashService from "@/services/StashService";
 
 const main = useMainStore();
 
-const state = reactive<{stashItems: Stash[]}>({
-	stashItems: []
+const state = reactive<{ stashItems: Stash[] }>({
+	stashItems: [],
 });
 
 async function loadStash() {
-	try {
-		const stash = collection(db, "stash").withConverter(converter.stash);
-		const stashItemsForUserQuery = query(stash, where("userId", "==", main.userId));
-		const stashItemsForUser = await getDocs(stashItemsForUserQuery);
-		state.stashItems = stashItemsForUser.docs.map(doc => doc.data());
-		console.log(state.stashItems);
-		// stashItemsForUser.forEach((stashItem) => {
-		// 	console.log(stashItem.id, " => ", stashItem.data());
-		// });
-	}
-	catch(error) {
-		console.error(error);
+	if (main.user) {
+		StashService.getStashesForUser(main.user.id);
+	} else {
+		console.error("Load Stash without user defined in pinia");
 	}
 }
 
 const unwatch = watch(
-		() => main.userId, // The property you want to watch
-		(newValue, oldValue) => {
-			// Code to execute when the property changes
-			console.log('Property changed:', newValue, oldValue);
-			loadStash();
+	() => main.user, // The property you want to watch
+	(newValue, oldValue) => {
+		// Code to execute when the property changes
+		console.log(`User changed from ${oldValue} to ${newValue}`);
+		loadStash();
 
-			unwatch();
-		}
-    );
-
+		unwatch();
+	}
+);
 </script>
 
 <template>
-  <div class="content">
+	<div class="content">
 		<div class="row items-push">
 			<div
 				v-for="(stashItem, index) in state.stashItems"
@@ -51,12 +40,17 @@ const unwatch = watch(
 				class="col-md-6 col-lg-4 col-xl-3"
 			>
 				<a
-				href="javascript:void(0)"
-				class="img-link img-link-zoom-in img-thumb img-lightbox"
+					href="javascript:void(0)"
+					class="img-link img-link-zoom-in img-thumb img-lightbox"
 				>
-				<img class="img-fluid" :src="`${stashItem.src}`" alt="Photo" />
+					<!-- TODO: src for stashItem -->
+					<img
+						class="img-fluid"
+						:src="`${stashItem.id}`"
+						alt="Photo"
+					/>
 				</a>
 			</div>
 		</div>
-  </div>
+	</div>
 </template>

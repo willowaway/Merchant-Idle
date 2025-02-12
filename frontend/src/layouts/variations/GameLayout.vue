@@ -25,17 +25,14 @@ store.mainContent({ mode: "narrow" });
   <BaseLayout>
     <!-- Side Overlay Content -->
     <!-- Using the available v-slot, we can override the default Side Overlay content from layouts/partials/SideOvelay.vue -->
-    <template #side-overlay-content>
-    </template>
+    <template #side-overlay-content> </template>
     <!-- END Side Overlay Content -->
 
     <!-- Sidebar Content -->
     <!-- Using the available v-slot, we can override the default Sidebar content from layouts/partials/Sidebar.vue -->
     <template #sidebar-content>
       <div class="content-side">
-        <BaseNavigation
-          :nodes="menu"
-        />
+        <BaseNavigation :nodes="menu" />
       </div>
     </template>
     <!-- END Sidebar Content -->

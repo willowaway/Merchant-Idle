@@ -3,30 +3,29 @@ import { computed } from "vue";
 
 // Component properties
 const props = defineProps<{
-	image: {
-    type: String,
-    description: "The url of the image to show",
-  },
+  image: {
+    type: String;
+    description: "The url of the image to show";
+  };
   innerClass: {
-    type: String,
-    description:
-      "The class of the inner div. Usually a background color with opacity class",
-  },
+    type: String;
+    description: "The class of the inner div. Usually a background color with opacity class";
+  };
   imageTop: {
-    type: Boolean,
-    default: false,
-    description: "Align the image background to the top",
-  },
+    type: Boolean;
+    default: false;
+    description: "Align the image background to the top";
+  };
   imageBottom: {
-    type: Boolean,
-    default: false,
-    description: "Align the image background to the bottom",
-  },
+    type: Boolean;
+    default: false;
+    description: "Align the image background to the bottom";
+  };
   imageFixed: {
-    type: Boolean,
-    default: false,
-    description: "Set the background to fixed for a parallax effect",
-  },
+    type: Boolean;
+    default: false;
+    description: "Set the background to fixed for a parallax effect";
+  };
 }>();
 
 // Set CSS classes accordingly
@@ -40,10 +39,10 @@ const classContainer = computed(() => {
 
 // Ser any inner classes if set
 const classContainerInner = computed(() => {
-	if (props)
-  return {
-    [props.innerClass as any]: props.innerClass,
-  };
+  if (props)
+    return {
+      [props.innerClass as any]: props.innerClass,
+    };
 });
 </script>
 

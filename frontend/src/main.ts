@@ -1,6 +1,6 @@
-import { createApp } from 'vue'
+import { createApp } from "vue";
 import { createPinia } from "pinia";
-import App from './App.vue'
+import App from "./App.vue";
 
 import router from "./router/router";
 
@@ -9,23 +9,21 @@ import BaseBlock from "@/components/BaseBlock.vue";
 import BaseBackground from "@/components/BaseBackground.vue";
 import BasePageHeading from "@/components/BasePageHeading.vue";
 
-import '@/firebase/firebase-app';
-import '@/firebase/db';
-import '@/firebase/auth';
-
 // Bootstrap framework
 import * as bootstrap from "bootstrap";
-import { toast } from './errors/toast';
+import { toast } from "./errors/toast";
 window.bootstrap = bootstrap;
 
 // Craft new application
-const app = createApp(App, {created() {
-	if (sessionStorage.redirect) {
-		const redirect = sessionStorage.redirect
-		delete sessionStorage.redirect
-		router.push(redirect)
-	}
-}});
+const app = createApp(App, {
+	created() {
+		if (sessionStorage.redirect) {
+			const redirect = sessionStorage.redirect;
+			delete sessionStorage.redirect;
+			router.push(redirect);
+		}
+	},
+});
 
 // Register global components
 app.component("BaseBlock", BaseBlock);
@@ -37,13 +35,13 @@ app.use(createPinia());
 app.use(router);
 
 app.config.errorHandler = (err, instance, info) => {
-	toast.error(`Error: ${err}\nAdditional info: ${info}`)
+	toast.error(`Error: ${err}\nAdditional info: ${info}`);
 	console.error(`Error: ${err}\nAdditional info: ${info}`, err);
-}
-app.config.warnHandler = function(msg, instance, trace) {
+};
+app.config.warnHandler = function (msg, instance, trace) {
 	toast.warn(`Warn: ${msg}\nTrace: ${trace}`);
 	console.warn(`Warn: ${msg}\nTrace: ${trace}`, msg);
-}
+};
 
 // ..and finally mount it!
 app.mount("#app");

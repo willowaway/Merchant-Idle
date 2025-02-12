@@ -23,11 +23,7 @@
     <div class="row">
       <div class="col-md-6 col-xxl-4">
         <!-- Sign In -->
-        <RouterLink
-          :to="{ name: 'signin' }"
-          custom
-          v-slot="{ href, navigate }"
-        >
+        <RouterLink :to="{ name: 'signin' }" custom v-slot="{ href, navigate }">
           <BaseBlock tag="a" link-shadow :href="href" @click="navigate">
             <div class="py-5 text-center">
               <div class="mb-3">
@@ -41,11 +37,7 @@
       </div>
       <div class="col-md-6 col-xxl-4">
         <!-- Sign Up -->
-        <RouterLink
-          :to="{ name: 'signup' }"
-          custom
-          v-slot="{ href, navigate }"
-        >
+        <RouterLink :to="{ name: 'signup' }" custom v-slot="{ href, navigate }">
           <BaseBlock tag="a" link-shadow :href="href" @click="navigate">
             <div class="py-5 text-center">
               <div class="mb-3">

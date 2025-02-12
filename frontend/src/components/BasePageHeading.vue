@@ -1,11 +1,10 @@
 <script setup lang="ts">
-
 // Component properties
 defineProps<{
-	/** The title of page heading section */
-	title: string;
-	/** The subtitle of page heading section */
-	subtitle: string;
+  /** The title of page heading section */
+  title: string;
+  /** The subtitle of page heading section */
+  subtitle: string;
 }>();
 </script>
 

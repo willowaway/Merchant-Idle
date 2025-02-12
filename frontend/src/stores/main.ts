@@ -1,39 +1,23 @@
-import { defineStore } from 'pinia';
+import type { User } from "merchant-idle-middleware";
+import { defineStore } from "pinia";
 
 interface IApplicationState {
-	username: string | undefined;
-	userId: string | undefined;
-	email: string | undefined;
-	playerHP: number | undefined;
+	user: User | undefined;
 }
 
 const initialState: IApplicationState = {
-	username: undefined,
-	email: undefined,
-	userId: undefined,
-	playerHP: undefined,
+	user: undefined,
 };
 
-export const useMainStore = defineStore('main', {
-	state: () => (initialState),
+export const useMainStore = defineStore("main", {
+	state: () => initialState,
 
 	actions: {
-		setPlayerName(playerName: string) {
-			this.username = playerName;
+		signIn(user: User) {
+			this.user = user;
 		},
-		setEmail(email: string) {
-			this.email = email;
+		logOut() {
+			this.user = undefined;
 		},
-		setUserId(playerId: string) {
-			this.userId = playerId;
-		},
-		setPlayerHP(playerHP: number) {
-			this.playerHP = playerHP;
-		},
-		playerLogOut() {
-			this.username = initialState.username;
-			this.userId = initialState.userId;
-			this.playerHP = initialState.playerHP;
-		}
 	},
 });

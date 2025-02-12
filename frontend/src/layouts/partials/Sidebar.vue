@@ -26,10 +26,10 @@ const store = useTemplateStore();
 
 // Init SimpleBar (custom scrolling)
 onMounted(() => {
-	const sideBar = document.getElementById("simplebar-sidebar");
-	if (sideBar) {
-		new SimpleBar(sideBar);
-	}
+  const sideBar = document.getElementById("simplebar-sidebar");
+  if (sideBar) {
+    new SimpleBar(sideBar);
+  }
 });
 </script>
 

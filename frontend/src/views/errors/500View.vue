@@ -2,7 +2,6 @@
 import { useTemplateStore } from "@/stores/template";
 
 const template = useTemplateStore();
-
 </script>
 <template>
   <!-- Page Content -->
@@ -18,12 +17,11 @@ const template = useTemplateStore();
             </h2>
             <!-- END Error Header -->
 
-			<!-- Error Body -->
-			<p>
-				{{ template.errorMessage }}
-			</p>
-			<!-- END Error Body -->
-
+            <!-- Error Body -->
+            <p>
+              {{ template.errorMessage }}
+            </p>
+            <!-- END Error Body -->
           </div>
         </div>
       </div>

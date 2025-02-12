@@ -8,7 +8,7 @@ import SimpleLayout from "@/layouts/variations/SimpleLayout.vue";
 
 // Frontend: Landing
 const StashView = () => import("@/views/tabs/StashView.vue");
-const ShopView= () => import("@/views/tabs/ShopView.vue");
+const ShopView = () => import("@/views/tabs/ShopView.vue");
 
 // Auth
 const AuthSignIn = () => import("@/views/auth/SignInView.vue");
@@ -109,33 +109,31 @@ const routes = [
 				component: Error503,
 			},
 		],
-	  },
+	},
 ];
 
 // Create Router
 const router = createRouter({
-  history: createWebHistory("/Merchant-Idle/"),
-  linkActiveClass: "active",
-  linkExactActiveClass: "active",
-  scrollBehavior() {
-    return { left: 0, top: 0 };
-  },
-  routes,
+	history: createWebHistory("/Merchant-Idle/"),
+	linkActiveClass: "active",
+	linkExactActiveClass: "active",
+	scrollBehavior() {
+		return { left: 0, top: 0 };
+	},
+	routes,
 });
 
 // NProgress
-/*eslint-disable no-unused-vars*/
+
 NProgress.configure({ showSpinner: false });
 
 router.beforeResolve((to, from, next) => {
-	console.log(`to: ${to.fullPath} from: ${from.fullPath}`);
 	NProgress.start();
 	next();
 });
 
 router.afterEach(() => {
-  NProgress.done();
+	NProgress.done();
 });
-/*eslint-enable no-unused-vars*/
 
 export default router;

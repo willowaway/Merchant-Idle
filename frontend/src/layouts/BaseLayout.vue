@@ -24,11 +24,11 @@ const store = useTemplateStore();
 const savedDarkMode = localStorage.getItem("oneuiVueDarkMode");
 
 if (savedDarkMode != null) {
-	if (["on", "off", "system"].includes(savedDarkMode)) {
-	store.darkMode({ mode: savedDarkMode });
-	} else {
-	store.darkMode({ mode: store.settings.darkMode });
-	}
+  if (["on", "off", "system"].includes(savedDarkMode)) {
+    store.darkMode({ mode: savedDarkMode });
+  } else {
+    store.darkMode({ mode: store.settings.darkMode });
+  }
 }
 
 // Set color theme based on localStorage or on store settings (if not saved before)
