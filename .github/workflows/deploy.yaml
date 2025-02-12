@@ -30,12 +30,11 @@ jobs:
               uses: actions/checkout@v4
             - name: Setup Pages
               uses: actions/configure-pages@v5
-            - name: Build project with environment variables
-              run: |
-                  echo "API_URL: ${{ secrets.API_URL }}"
-                  npm run build
-              env:
-                  API_URL: ${{ secrets.API_URL }} # Accessing the secret
+            - name: Build with Jekyll
+              uses: actions/jekyll-build-pages@v1
+              with:
+                  source: ./
+                  destination: ./_site
             - name: Upload artifact
               uses: actions/upload-pages-artifact@v3
 
