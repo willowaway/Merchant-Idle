@@ -32,11 +32,6 @@ jobs:
               uses: actions/configure-pages@v5
             - name: Build with Jekyll
               uses: actions/jekyll-build-pages@v1
-              run: |
-                  echo "API_URL: ${{ secrets.API_URL }}"
-                  npm run build
-              env:
-                  API_URL: ${{ secrets.API_URL }} # Accessing the secret
               with:
                   source: ./
                   destination: ./_site
