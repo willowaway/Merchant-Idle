@@ -1,0 +1,35 @@
+name: Deploy to GitHub Pages
+
+on:
+    push:
+        branches:
+            - main # Trigger on pushes to the main branch
+
+jobs:
+    build-and-deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 18 # Or your preferred version
+
+            - name: Install dependencies
+              run: npm install
+
+            - name: Build project with environment variables
+              run: |
+                  echo "API_URL: ${{ secrets.API_URL }}"
+                  npm run build
+              env:
+                  API_URL: ${{ secrets.API_URL }} # Accessing the secret
+
+            - name: Deploy to GitHub Pages
+              uses: JamesIves/github-pages-deploy-action@v4
+              with:
+                  branch: gh-pages
+                  folder: dist # Or your build output folder
+                  token: ${{ secrets.GITHUB_TOKEN }}
