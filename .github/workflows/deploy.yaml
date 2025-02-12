@@ -35,6 +35,8 @@ jobs:
               with:
                   source: ./
                   destination: ./_site
+              env:
+                  API_URL: ${{ secrets.API_URL }} # Accessing the secret
             - name: Upload artifact
               uses: actions/upload-pages-artifact@v3
 
