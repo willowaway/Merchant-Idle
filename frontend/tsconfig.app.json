@@ -1,0 +1,25 @@
+{
+	"extends": "@vue/tsconfig/tsconfig.dom.json",
+	"compilerOptions": {
+		"paths": {
+			"@/*": ["./src/*"]
+		},
+		"allowJs": true,
+		/* Linting */
+		"strict": true,
+		"strictNullChecks": true,
+		"verbatimModuleSyntax": true,
+		"noUnusedLocals": false, // set to true for production
+		"noUnusedParameters": false,
+		"types": ["node"]
+		// "noFallthroughCasesInSwitch": true, // Can fix issues with importing @Collection Classes
+		// "noUncheckedSideEffectImports": true // Can fix issues with importing @Collection Classes
+	},
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.tsx",
+		"src/**/*.vue",
+		"./src/**/*.vue",
+		"./.github/workflows/deploy.yaml"
+	]
+}

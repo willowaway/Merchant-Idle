@@ -1,0 +1,27 @@
+{
+	"compilerOptions": {
+		"tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+		"target": "ES2022",
+		"lib": ["ES2023"],
+		"module": "ESNext",
+		"skipLibCheck": true,
+
+		/* Bundler mode */
+		"moduleResolution": "bundler",
+		"allowImportingTsExtensions": true,
+		"isolatedModules": true,
+		"moduleDetection": "force",
+		"noEmit": true,
+		"forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
+		"noImplicitAny": true /* Enable error reporting for expressions and declarations with an implied 'any' type. */,
+		"strictPropertyInitialization": false /* Check for class properties that are declared but not set in the constructor. */,
+
+		/* Linting */
+		"strict": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": false,
+		"noFallthroughCasesInSwitch": true,
+		"noUncheckedSideEffectImports": true
+	},
+	"include": ["vite.config.ts"]
+}

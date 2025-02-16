@@ -23,5 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-backend
-firestore.creds.json
+src/Items
+src/Monsters
+src/ResizedImages
