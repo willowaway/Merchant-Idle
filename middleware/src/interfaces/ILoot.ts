@@ -1,4 +1,4 @@
 export default interface ILoot {
-	id: number;
+	id: string;
 	name: string;
 }

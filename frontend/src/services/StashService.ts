@@ -1,5 +1,5 @@
 import { plainToInstance, type ClassConstructor } from "class-transformer";
-import { Stash } from "merchant-idle-middleware";
+import { StashItemView } from "merchant-idle-middleware";
 import { Service } from "./Service";
 
 class StashService extends Service {
@@ -9,18 +9,18 @@ class StashService extends Service {
 		}
 	}
 
-	async getStashesForUser(userId: number): Promise<Stash[]> {
+	async getStashItemViewForUser(userId: string): Promise<StashItemView[]> {
 		const response = await fetch(
-			`${this.apiUrl}/api/stash/get/stashes-for-user/${userId}`
+			`${this.apiUrl}/api/stash/get/stash-item-view/${userId}`
 		);
 		this.handleResponse(response);
 
 		const responseJson = await response.json();
-		const stashes: Stash[] = responseJson.map((data: any) =>
-			plainToInstance(Stash, data)
+		const stashItems: StashItemView[] = responseJson.map((data: any) =>
+			plainToInstance(StashItemView, data)
 		);
 
-		return stashes;
+		return stashItems;
 	}
 }
 

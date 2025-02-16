@@ -1,17 +1,24 @@
-export default interface IItem {
+import IStashItemView from "../interfaces/IStashItemView";
+
+export class StashItemView implements IStashItemView {
 	id: string;
 	name: string;
+	userId: string;
+	itemId: string;
+	numberInShop: number;
+	numberInStash: number;
+	priceEstimated: number;
+	reaction: string;
+	isPopular: boolean;
 	category: string;
 	slot: string;
 	tier: number;
 	baseValue: number;
 	src: string;
-	/** 1d8, 2d6, etc */
+	isEquipped: boolean;
 	baseDamage: string | null;
 	attackSpeed: number | null;
-	/** Slice, Stab, Crush, Accurate, Rapid, Long Range, Missile, Barrage, Elemental */
 	attackType: string | null;
-	/** Dex, Str, Int */
 	weaponType: string | null;
 	dexterity: number | null;
 	strength: number | null;

@@ -8,4 +8,7 @@
 // --------------------------------------------------
 
 // For example, changing the primary color
-// $primary: #a48ad4;
+$primary: #335686;
+$primary-darker: #1c2231; //#11141d
+$primary-dark: #222731;
+$stash-items-bg: $primary-darker !default;

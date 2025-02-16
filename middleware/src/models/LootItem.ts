@@ -1,8 +1,8 @@
 import ILootItem from "../interfaces/ILootItem";
 
 export class LootItem implements ILootItem {
-	id: number;
-	lootId: number;
-	itemId: number;
+	id: string;
+	lootId: string;
+	itemId: string;
 	weight: number;
 }

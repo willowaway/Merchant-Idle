@@ -1,6 +1,6 @@
 export default interface ILootItem {
-	id: number;
-	lootId: number;
-	itemId: number;
+	id: string;
+	lootId: string;
+	itemId: string;
 	weight: number;
 }

@@ -1,7 +1,8 @@
 import IMonster from "../interfaces/IMonster";
 
 export class Monster implements IMonster {
-	id: number;
+	id: string;
+	name: string;
 	hp: number;
-	lootId: number;
+	lootId: string;
 }

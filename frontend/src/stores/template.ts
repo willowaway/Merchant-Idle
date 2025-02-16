@@ -19,6 +19,7 @@ export const useTemplateStore = defineStore({
 			header: true,
 			sidebar: true,
 			sideOverlay: true,
+			stashSideOverlay: false,
 			footer: true,
 		},
 
@@ -70,7 +71,7 @@ export const useTemplateStore = defineStore({
 					this.settings.sidebarVisibleDesktop = false;
 				} else if (payload.mode === "toggle") {
 					this.settings.sidebarVisibleDesktop =
-            !this.settings.sidebarVisibleDesktop;
+						!this.settings.sidebarVisibleDesktop;
 				}
 			} else {
 				if (payload.mode === "open") {
@@ -79,7 +80,7 @@ export const useTemplateStore = defineStore({
 					this.settings.sidebarVisibleMobile = false;
 				} else if (payload.mode === "toggle") {
 					this.settings.sidebarVisibleMobile =
-            !this.settings.sidebarVisibleMobile;
+						!this.settings.sidebarVisibleMobile;
 				}
 			}
 		},
@@ -122,7 +123,8 @@ export const useTemplateStore = defineStore({
 			} else if (payload.mode === "close") {
 				this.settings.sideOverlayVisible = false;
 			} else if (payload.mode === "toggle") {
-				this.settings.sideOverlayVisible = !this.settings.sideOverlayVisible;
+				this.settings.sideOverlayVisible =
+					!this.settings.sideOverlayVisible;
 			}
 		},
 		// Sets side overlay hover mode (on, off, toggle)
@@ -133,7 +135,7 @@ export const useTemplateStore = defineStore({
 				this.settings.sideOverlayHoverable = false;
 			} else if (payload.mode === "toggle") {
 				this.settings.sideOverlayHoverable =
-          !this.settings.sideOverlayHoverable;
+					!this.settings.sideOverlayHoverable;
 			}
 		},
 		// Sets page overlay visibility (on, off, toggle)
@@ -224,7 +226,8 @@ export const useTemplateStore = defineStore({
 
 					if (
 						window.matchMedia &&
-            window.matchMedia("(prefers-color-scheme: dark)").matches
+						window.matchMedia("(prefers-color-scheme: dark)")
+							.matches
 					) {
 						this.settings.darkModeActive = true;
 						lHtml.classList.add("dark");
@@ -234,7 +237,10 @@ export const useTemplateStore = defineStore({
 					}
 				}
 
-				localStorage.setItem("oneuiVueDarkMode", this.settings.darkMode);
+				localStorage.setItem(
+					"oneuiVueDarkMode",
+					this.settings.darkMode
+				);
 			}
 		},
 		// Sets active color theme

@@ -4,8 +4,8 @@
  * 'to' attribute points to the route name, not the path url
  */
 import type { Node } from "@/interfaces/Node";
-import chestImg from "/assets/media/icons/Chest.png";
-import coinImg from "/assets/media/icons/Coin.png";
+import chestImg from "/assets/media/Icons/Stash.png";
+import coinImg from "/assets/media/Icons/Coin.png";
 
 const menu: Array<Node> = [
 	{

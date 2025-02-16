@@ -48,7 +48,7 @@ async function onSubmit() {
 	}
 
 	UserService.signInUser(state.email, state.password).then((signedInUser) => {
-		main.signIn(signedInUser);
+		main.setUser(signedInUser);
 
 		router.push("stash");
 	});

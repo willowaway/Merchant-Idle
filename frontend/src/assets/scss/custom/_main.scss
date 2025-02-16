@@ -12,10 +12,41 @@
 // @import 'component1';
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s ease;
+	transition: opacity 0.5s ease;
 }
 
 .fade-enter-from,
 .fade-leave-to {
-  opacity: 0;
+	opacity: 0;
 }
+
+#stash-items {
+	background-color: $stash-items-bg;
+}
+
+.stash-item-info {
+	background-color: $primary-darker;
+}
+
+.simplebar-content {
+	height: 100%;
+}
+
+.tile {
+	background-color: #222837;
+}
+
+.img-thumb {
+	background-color: #222837 !important;
+}
+
+// .col-fixed {
+// 	-ms-flex: 0 0 128px;
+// 	flex: 0 0 128px;
+// }
+// @include media-breakpoint-up(xl) {
+// 	.col-fixed {
+// 		-ms-flex: 64px 0 64px;
+// 		flex: 64px 0 64px;
+// 	}
+// }

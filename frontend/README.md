@@ -42,9 +42,10 @@ git subtree push --prefix dist origin gh-pages
 
 https://gist.github.com/chrisjacob/825950
 https://stackoverflow.com/questions/53648652/how-to-use-environment-variables-in-github-page
+git clone https://willowaway:<Access Token>@github.com/willowaway/Merchant-Idle.git
 
 ### Install Middleware
 
 ```
-npm install --save merchant-idle-middleware@1.0.8
+npm update --save merchant-idle-middleware
 ```

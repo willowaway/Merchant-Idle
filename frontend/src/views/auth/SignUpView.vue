@@ -63,7 +63,7 @@ async function createUser() {
 	UserService.create(state.username, state.email, state.password)
 		.then((createdUser) => {
 			console.log(`User created in MySQL: ${createdUser.username}`);
-			main.signIn(createdUser);
+			main.setUser(createdUser);
 			router.push("stash");
 		})
 		.catch((error) => {

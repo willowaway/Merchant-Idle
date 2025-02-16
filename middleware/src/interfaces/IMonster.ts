@@ -1,5 +1,6 @@
 export default interface IMonster {
-	id: number;
+	id: string;
+	name: string;
 	hp: number;
-	lootId: number;
+	lootId: string;
 }
