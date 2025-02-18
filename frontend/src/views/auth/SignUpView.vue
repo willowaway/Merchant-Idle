@@ -97,7 +97,7 @@ async function createUser() {
 						</template>
 
 						<div class="p-sm-3 px-lg-4 px-xxl-5 py-lg-5">
-							<h1 class="h2 mb-1">OneUI</h1>
+							<h1 class="h2 mb-1">Merchant Idle</h1>
 							<p class="fw-medium text-muted">
 								Please fill the following details to create a
 								new account.

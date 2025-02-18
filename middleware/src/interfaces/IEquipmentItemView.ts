@@ -1,19 +1,12 @@
-import IStashItemView from "../interfaces/IStashItemView";
-
-export class StashItemView implements IStashItemView {
+export default interface IEquipmentItemView {
 	id: string;
 	name: string;
 	userId: string;
 	itemId: string;
-	numberInShop: number;
-	numberInStash: number;
-	priceEstimated: number;
-	reaction: string;
-	isPopular: boolean;
+	stashId: string;
 
 	/** Item */
 	category: string;
-	baseValue: number;
 	src: string;
 
 	/** Weapon */

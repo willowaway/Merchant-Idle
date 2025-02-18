@@ -35,8 +35,8 @@ app.use(createPinia());
 app.use(router);
 
 app.config.errorHandler = (err, instance, info) => {
-	toast.error(`Error: ${err}\nAdditional info: ${info}`);
-	console.error(`Error: ${err}\nAdditional info: ${info}`, err);
+	toast.error(`${err}`);
+	console.error(err);
 };
 app.config.warnHandler = function (msg, instance, trace) {
 	toast.warn(`Warn: ${msg}\nTrace: ${trace}`);

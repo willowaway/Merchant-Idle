@@ -7,5 +7,4 @@ export default interface IStash {
 	priceEstimated: number;
 	reaction: string;
 	isPopular: boolean;
-	isEquipped: boolean;
 }

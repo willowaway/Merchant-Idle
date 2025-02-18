@@ -81,7 +81,7 @@ store.mainContent({ mode: "narrow" });
 		<!-- Footer Content Left -->
 		<!-- Using the available v-slot, we can override the default Footer content from layouts/partials/Footer.vue -->
 		<template #footer-content-left>
-			<strong>My App</strong>
+			<strong>Merchant Idle</strong>
 			&copy; {{ store.app.copyright }}
 		</template>
 		<!-- END Footer Content Left -->

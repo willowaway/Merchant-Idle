@@ -2,7 +2,11 @@
 import { onMounted, reactive } from "vue";
 import { useMainStore } from "@/stores/main";
 import { watch } from "vue";
-import { Stash, StashItemView } from "merchant-idle-middleware";
+import {
+	EquipmentItemView,
+	Stash,
+	StashItemView,
+} from "merchant-idle-middleware";
 import StashService from "@/services/StashService";
 import { ref, nextTick } from "vue";
 import EditableText from "@/layouts/partials/EditableText.vue";
@@ -10,6 +14,7 @@ import { Modal } from "bootstrap";
 import { isNullishCoalesce } from "typescript";
 import BaseBlock from "@/components/BaseBlock.vue";
 import ItemService from "@/services/ItemService";
+import EquipmentService from "@/services/EquipmentService";
 
 const main = useMainStore();
 
@@ -31,6 +36,7 @@ const state = reactive<{
 	stashItemDetails: undefined,
 	editMode: false,
 });
+const equipButton = ref<HTMLButtonElement | null>(null);
 
 async function loadStash() {
 	if (main.userId) {
@@ -43,6 +49,8 @@ async function loadStash() {
 	}
 }
 
+loadStash();
+
 function updateStashItems(updatedStashItem: StashItemView) {
 	for (let index = 0; index < state.stashItems.length; index++) {
 		const stashItem = state.stashItems[index];
@@ -53,21 +61,49 @@ function updateStashItems(updatedStashItem: StashItemView) {
 	}
 }
 
-loadStash();
+async function equip(stashItem: StashItemView) {
+	if (main.userId) {
+		const equipmentItemViewResult = await EquipmentService.create(
+			main.userId,
+			stashItem.itemId,
+			stashItem.id
+		);
+		if (
+			typeof equipmentItemViewResult === "string" &&
+			equipmentItemViewResult === "Item already equipped"
+		) {
+			if (equipButton.value) {
+				equipButton.value.textContent = "Equipped";
+			}
+		} else if (equipmentItemViewResult instanceof EquipmentItemView) {
+			main.equip(equipmentItemViewResult);
+			if (equipButton.value) {
+				equipButton.value.textContent = "Equipped";
+			}
+		} else {
+			console.error("Failed to equip stash item");
+		}
+	}
+}
 
 watch(
 	() => ({ ...state.stashItemDetails }),
 	async (newStashItemDetails, oldStashItemDetails) => {
 		if (
+			JSON.stringify(oldStashItemDetails) != "{}" &&
 			JSON.stringify(newStashItemDetails) !==
-			JSON.stringify(oldStashItemDetails)
+				JSON.stringify(oldStashItemDetails)
 		) {
-			console.log("Update");
+			console.log("updateItemGetStashItemView");
 			const updatedStashItemView =
 				await ItemService.updateItemGetStashItemView(
 					newStashItemDetails as StashItemView
 				);
-			updateStashItems(updatedStashItemView);
+			if (updatedStashItemView) {
+				updateStashItems(updatedStashItemView);
+			} else {
+				console.error("Failed to update stash item");
+			}
 		}
 	},
 	{ deep: true }
@@ -169,6 +205,15 @@ function showDetailsModal(stashItem: StashItemView) {
 									</div>
 								</div>
 							</div>
+						</div>
+						<div>
+							<button
+								class="btn btn-lg btn-primary mb-1"
+								@click="equip(state.stashItemDetails)"
+								ref="equipButton"
+							>
+								Equip
+							</button>
 						</div>
 					</div>
 				</div>

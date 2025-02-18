@@ -47,11 +47,16 @@ async function onSubmit() {
 		return;
 	}
 
-	UserService.signInUser(state.email, state.password).then((signedInUser) => {
-		main.setUser(signedInUser);
-
-		router.push("stash");
-	});
+	UserService.signInUser(state.email, state.password).then(
+		(signedInUserResponse) => {
+			if (typeof signedInUserResponse === "string") {
+				state.errorMessage = signedInUserResponse;
+			} else {
+				main.setUser(signedInUserResponse);
+				router.push("stash");
+			}
+		}
+	);
 }
 </script>
 
@@ -78,14 +83,14 @@ async function onSubmit() {
 						</template>
 
 						<div class="p-sm-3 px-lg-4 px-xxl-5 py-lg-5">
-							<h1 class="h2 mb-1">OneUI</h1>
+							<h1 class="h2 mb-1"><b>Merchant</b> Idle</h1>
 							<p class="fw-medium text-muted">
 								Welcome, please login.
 							</p>
 
 							<!-- Sign In Form -->
 							<form @submit.prevent="onSubmit">
-								<div class="py-3">
+								<div>
 									<div class="mb-4">
 										<input
 											type="text"
@@ -156,9 +161,11 @@ async function onSubmit() {
 										Sign In
 									</button>
 									<Transition name="fade">
-										<span v-if="state.errorMessage">{{
-											state.errorMessage
-										}}</span>
+										<span
+											v-if="state.errorMessage"
+											class="text-warning"
+											>{{ state.errorMessage }}</span
+										>
 									</Transition>
 								</div>
 							</form>

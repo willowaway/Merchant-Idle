@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted } from "vue";
+import { onMounted, onUnmounted, reactive, watch } from "vue";
 import { useTemplateStore } from "@/stores/template";
 import { useMainStore } from "@/stores/main";
 import router from "@/router/router";
@@ -17,10 +17,20 @@ import weaponImg from "/assets/media/Icons/Weapon.png";
 
 // SimpleBar, for more info and examples you can check out https://github.com/Grsmto/simplebar/tree/master/packages/simplebar-vue
 import SimpleBar from "simplebar";
+import EquipmentService from "@/services/EquipmentService";
+import type { EquipmentItemView } from "merchant-idle-middleware";
 
 // Main store
 const store = useTemplateStore();
 const main = useMainStore();
+
+// watch(
+// 	() => ({ ...main.equipments }),
+// 	async (newEquipments, oldEquipments) => {
+
+// 	},
+// 	{ deep: true }
+// );
 
 // Close side overlay on ESCAPE key down
 function eventSideOverlay(event: KeyboardEvent) {
@@ -30,8 +40,17 @@ function eventSideOverlay(event: KeyboardEvent) {
 	}
 }
 
+async function unequip(equipment: EquipmentItemView | undefined) {
+	if (equipment) {
+		const response = await EquipmentService.delete(equipment.id);
+		if (response === "Success") {
+			main.unequip(equipment);
+		}
+	}
+}
+
 // Init SimpleBar (custom scrolling) and attach ESCAPE key event listener
-onMounted(() => {
+onMounted(async () => {
 	const sidebar = document.getElementById("side-overlay");
 	if (sidebar) {
 		new SimpleBar(sidebar);
@@ -41,6 +60,16 @@ onMounted(() => {
 
 	if (!main.userId) {
 		router.push("/");
+	} else {
+		const equipmentItemViews =
+			await EquipmentService.getEquipmentItemViewForUser(main.userId);
+		if (equipmentItemViews) {
+			main.equipAll(equipmentItemViews);
+		} else {
+			console.error(
+				`Failed to get equipment item view for userId: ${main.userId}`
+			);
+		}
 	}
 });
 
@@ -94,115 +123,203 @@ async function logOut() {
 				<div class="content-side d-flex flex-column h-100 pb-3">
 					<div class="row pb-4">
 						<div class="col-4"></div>
-						<div class="col-4 d-flex justify-content-evenly">
-							<a
-								href="javascript:void(0)"
-								class="img-link img-link-zoom-in img-thumb img-lightbox"
+						<div
+							class="dropdown col-4 d-flex justify-content-evenly"
+						>
+							<button
+								class="btn img-thumb"
+								type="button"
+								data-bs-toggle="dropdown"
+								aria-expanded="false"
 							>
 								<img
 									class="img-fluid"
 									width="50"
-									:src="helmetImg"
-									alt="Helmet"
+									:src="main?.helmet?.src || helmetImg"
+									:alt="main?.helmet?.name || 'Helmet'"
 								/>
-							</a>
+							</button>
+							<ul class="dropdown-menu">
+								<li>
+									<button
+										class="dropdown-item"
+										@click="unequip(main.helmet)"
+									>
+										Unequipt
+									</button>
+								</li>
+							</ul>
 						</div>
 						<div class="col-4"></div>
 					</div>
 					<div class="row pb-4">
 						<div class="col-4"></div>
-						<div class="col-4 d-flex justify-content-evenly">
-							<a
-								href="javascript:void(0)"
-								class="img-link img-link-zoom-in img-thumb img-lightbox"
+						<div
+							class="dropdown col-4 d-flex justify-content-evenly"
+						>
+							<button
+								class="btn img-thumb"
+								type="button"
+								data-bs-toggle="dropdown"
+								aria-expanded="false"
 							>
 								<img
 									class="img-fluid"
 									width="50"
-									:src="necklaceImg"
-									alt="Necklace"
+									:src="main?.necklace?.src || necklaceImg"
+									:alt="main?.necklace?.name || 'Necklace'"
 								/>
-							</a>
+							</button>
+							<ul class="dropdown-menu">
+								<li>
+									<button
+										class="dropdown-item"
+										@click="unequip(main.necklace)"
+									>
+										Unequipt
+									</button>
+								</li>
+							</ul>
 						</div>
 						<div class="col-4"></div>
 					</div>
 					<div class="row pb-4 d-flex justify-content-center">
 						<div
-							class="col-4 col-lg-4 col-sm-2 d-flex justify-content-evenly"
+							class="dropdown col-4 col-lg-4 col-sm-2 d-flex justify-content-evenly"
 						>
-							<a
-								href="javascript:void(0)"
-								class="img-link img-link-zoom-in img-thumb img-lightbox"
+							<button
+								class="btn img-thumb"
+								type="button"
+								data-bs-toggle="dropdown"
+								aria-expanded="false"
 							>
 								<img
 									class="img-fluid"
 									width="50"
-									:src="weaponImg"
-									alt="Weapon"
+									:src="main?.weapon?.src || weaponImg"
+									:alt="main?.weapon?.name || 'Weapon'"
 								/>
-							</a>
+							</button>
+							<ul class="dropdown-menu">
+								<li>
+									<button
+										class="dropdown-item"
+										@click="unequip(main.weapon)"
+									>
+										Unequipt
+									</button>
+								</li>
+							</ul>
 						</div>
 						<div
-							class="col-4 col-lg-4 col-sm-2 d-flex justify-content-evenly"
+							class="dropdown col-4 col-lg-4 col-sm-2 d-flex justify-content-evenly"
 						>
-							<a
-								href="javascript:void(0)"
-								class="img-link img-link-zoom-in img-thumb img-lightbox"
+							<button
+								class="btn img-thumb"
+								type="button"
+								data-bs-toggle="dropdown"
+								aria-expanded="false"
 							>
 								<img
 									class="img-fluid"
 									width="50"
-									:src="chestImg"
-									alt="Chest"
+									:src="main?.chest?.src || chestImg"
+									:alt="main?.chest?.name || 'Chest'"
 								/>
-							</a>
+							</button>
+							<ul class="dropdown-menu">
+								<li>
+									<button
+										class="dropdown-item"
+										@click="unequip(main.chest)"
+									>
+										Unequipt
+									</button>
+								</li>
+							</ul>
 						</div>
 						<div
-							class="col-4 col-lg-4 col-sm-2 d-flex justify-content-evenly"
+							class="dropdown col-4 col-lg-4 col-sm-2 d-flex justify-content-evenly"
 						>
-							<a
-								href="javascript:void(0)"
-								class="img-link img-link-zoom-in img-thumb img-lightbox"
+							<button
+								class="btn img-thumb"
+								type="button"
+								data-bs-toggle="dropdown"
+								aria-expanded="false"
 							>
 								<img
 									class="img-fluid"
 									width="50"
-									:src="shieldImg"
-									alt="Shield"
+									:src="main?.offhand?.src || shieldImg"
+									:alt="main?.offhand?.name || 'Offhand'"
 								/>
-							</a>
+							</button>
+							<ul class="dropdown-menu">
+								<li>
+									<button
+										class="dropdown-item"
+										@click="unequip(main.offhand)"
+									>
+										Unequipt
+									</button>
+								</li>
+							</ul>
 						</div>
 					</div>
 					<div class="row pb-4 d-flex justify-content-center">
 						<div
-							class="col-4 col-lg-4 col-sm-2 d-flex justify-content-evenly"
+							class="dropdown col-4 col-lg-4 col-sm-2 d-flex justify-content-evenly"
 						>
-							<a
-								href="javascript:void(0)"
-								class="img-link img-link-zoom-in img-thumb img-lightbox"
+							<button
+								class="btn img-thumb"
+								type="button"
+								data-bs-toggle="dropdown"
+								aria-expanded="false"
 							>
 								<img
 									class="img-fluid"
 									width="50"
-									:src="glovesImg"
-									alt="Gloves"
+									:src="main?.gloves?.src || glovesImg"
+									:alt="main?.gloves?.name || 'Gloves'"
 								/>
-							</a>
+							</button>
+							<ul class="dropdown-menu">
+								<li>
+									<button
+										class="dropdown-item"
+										@click="unequip(main.gloves)"
+									>
+										Unequipt
+									</button>
+								</li>
+							</ul>
 						</div>
 						<div
-							class="col-4 col-lg-4 col-sm-2 d-flex justify-content-evenly"
+							class="dropdown col-4 col-lg-4 col-sm-2 d-flex justify-content-evenly"
 						>
-							<a
-								href="javascript:void(0)"
-								class="img-link img-link-zoom-in img-thumb img-lightbox"
+							<button
+								class="btn img-thumb"
+								type="button"
+								data-bs-toggle="dropdown"
+								aria-expanded="false"
 							>
 								<img
 									class="img-fluid"
 									width="50"
-									:src="legsImg"
-									alt="Legs"
+									:src="main?.legs?.src || legsImg"
+									:alt="main?.legs?.name || 'Legs'"
 								/>
-							</a>
+							</button>
+							<ul class="dropdown-menu">
+								<li>
+									<button
+										class="dropdown-item"
+										@click="unequip(main.legs)"
+									>
+										Unequipt
+									</button>
+								</li>
+							</ul>
 						</div>
 						<div
 							class="col-4 col-lg-4 col-sm-2 d-flex justify-content-evenly"
@@ -210,49 +327,85 @@ async function logOut() {
 					</div>
 					<div class="row pb-4 d-flex justify-content-center">
 						<div
-							class="col-4 col-lg-4 col-sm-2 d-flex justify-content-evenly"
+							class="dropdown col-4 col-lg-4 col-sm-2 d-flex justify-content-evenly"
 						>
-							<a
-								href="javascript:void(0)"
-								class="img-link img-link-zoom-in img-thumb img-lightbox"
+							<button
+								class="btn img-thumb"
+								type="button"
+								data-bs-toggle="dropdown"
+								aria-expanded="false"
 							>
 								<img
 									class="img-fluid"
 									width="50"
-									:src="ringImg"
-									alt="Ring"
+									:src="main?.ring?.src || ringImg"
+									:alt="main?.ring?.name || 'Ring'"
 								/>
-							</a>
+							</button>
+							<ul class="dropdown-menu">
+								<li>
+									<button
+										class="dropdown-item"
+										@click="unequip(main.ring)"
+									>
+										Unequipt
+									</button>
+								</li>
+							</ul>
 						</div>
 						<div
-							class="col-4 col-lg-4 col-sm-2 d-flex justify-content-evenly"
+							class="dropdown col-4 col-lg-4 col-sm-2 d-flex justify-content-evenly"
 						>
-							<a
-								href="javascript:void(0)"
-								class="img-link img-link-zoom-in img-thumb img-lightbox"
+							<button
+								class="btn img-thumb"
+								type="button"
+								data-bs-toggle="dropdown"
+								aria-expanded="false"
 							>
 								<img
 									class="img-fluid"
 									width="50"
-									:src="bootsImg"
-									alt="Boots"
+									:src="main?.boots?.src || bootsImg"
+									:alt="main?.boots?.name || 'Boots'"
 								/>
-							</a>
+							</button>
+							<ul class="dropdown-menu">
+								<li>
+									<button
+										class="dropdown-item"
+										@click="unequip(main.boots)"
+									>
+										Unequipt
+									</button>
+								</li>
+							</ul>
 						</div>
 						<div
-							class="col-4 col-lg-4 col-sm-2 d-flex justify-content-evenly"
+							class="dropdown col-4 col-lg-4 col-sm-2 d-flex justify-content-evenly"
 						>
-							<a
-								href="javascript:void(0)"
-								class="img-link img-link-zoom-in img-thumb img-lightbox"
+							<button
+								class="btn img-thumb"
+								type="button"
+								data-bs-toggle="dropdown"
+								aria-expanded="false"
 							>
 								<img
 									class="img-fluid"
 									width="50"
-									:src="braceletImg"
-									alt="Bracelet"
+									:src="main?.bracelet?.src || braceletImg"
+									:alt="main?.bracelet?.name || 'Bracelet'"
 								/>
-							</a>
+							</button>
+							<ul class="dropdown-menu">
+								<li>
+									<button
+										class="dropdown-item"
+										@click="unequip(main.bracelet)"
+									>
+										Unequipt
+									</button>
+								</li>
+							</ul>
 						</div>
 					</div>
 					<div class="row pb-2">

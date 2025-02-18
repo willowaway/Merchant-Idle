@@ -8,20 +8,30 @@ export default interface IStashItemView {
 	priceEstimated: number;
 	reaction: string;
 	isPopular: boolean;
+
+	/** Item */
 	category: string;
-	slot: string;
-	tier: number;
 	baseValue: number;
 	src: string;
-	isEquipped: boolean;
+
+	/** Weapon */
 	baseDamage: string | null;
 	attackSpeed: number | null;
 	attackType: string | null;
 	weaponType: string | null;
+	accuracy: number | null;
+
+	/** Weapon/Armour */
+	weaponTier: number | null;
+	armourTier: number | null;
+	weaponEvasion: number | null;
+	armourEvasion: number | null;
+	weaponSlot: string | null;
+	armourSlot: string | null;
+
+	/** Armour */
 	dexterity: number | null;
 	strength: number | null;
 	intelligence: number | null;
 	constitution: number | null;
-	accuracy: number | null;
-	evasion: number | null;
 }

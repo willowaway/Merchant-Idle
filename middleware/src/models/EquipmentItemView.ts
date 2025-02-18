@@ -1,19 +1,14 @@
-import IStashItemView from "../interfaces/IStashItemView";
+import IEquipmentItemView from "../interfaces/IEquipmentItemView";
 
-export class StashItemView implements IStashItemView {
+export class EquipmentItemView implements IEquipmentItemView {
 	id: string;
 	name: string;
 	userId: string;
 	itemId: string;
-	numberInShop: number;
-	numberInStash: number;
-	priceEstimated: number;
-	reaction: string;
-	isPopular: boolean;
+	stashId: string;
 
 	/** Item */
 	category: string;
-	baseValue: number;
 	src: string;
 
 	/** Weapon */
