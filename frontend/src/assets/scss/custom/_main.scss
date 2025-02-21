@@ -20,11 +20,21 @@
 	opacity: 0;
 }
 
+.stash-item {
+	position: relative;
+	height: 64px;
+	width: 64px;
+}
+
 #stash-items {
 	background-color: $stash-items-bg;
 }
 
 .stash-item-info {
+	background-color: $primary-darker;
+}
+
+.darker {
 	background-color: $primary-darker;
 }
 
@@ -38,8 +48,23 @@
 
 .img-thumb {
 	background-color: #222837 !important;
+	border: none;
 }
 
+.caret {
+	display: inline-block;
+	width: 0;
+	height: 0;
+	margin-left: 5px;
+	vertical-align: middle;
+	border-top: 6px solid;
+	border-right: 6px solid transparent;
+	border-left: 6px solid transparent;
+	transition: transform 0.2s ease-in-out;
+}
+button[aria-expanded="false"] > .caret {
+	transform: rotate(-90deg);
+}
 // .col-fixed {
 // 	-ms-flex: 0 0 128px;
 // 	flex: 0 0 128px;

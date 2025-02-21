@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, reactive, watch } from "vue";
+import { onMounted, onUnmounted, reactive, ref, watch } from "vue";
 import { useTemplateStore } from "@/stores/template";
 import { useMainStore } from "@/stores/main";
 import router from "@/router/router";

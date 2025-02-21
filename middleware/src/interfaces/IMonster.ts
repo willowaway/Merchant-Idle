@@ -3,4 +3,7 @@ export default interface IMonster {
 	name: string;
 	hp: number;
 	lootId: string;
+	src: string;
+	zone: string;
+	order: number;
 }

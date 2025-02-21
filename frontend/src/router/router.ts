@@ -9,6 +9,7 @@ import SimpleLayout from "@/layouts/variations/SimpleLayout.vue";
 // Frontend: Landing
 const StashView = () => import("@/views/tabs/StashView.vue");
 const ShopView = () => import("@/views/tabs/ShopView.vue");
+const ExploreView = () => import("@/views/tabs/ExploreView.vue");
 
 // Auth
 const AuthSignIn = () => import("@/views/auth/SignInView.vue");
@@ -66,6 +67,17 @@ const routes = [
 				path: "shop",
 				name: "shop",
 				component: ShopView,
+			},
+		],
+	},
+	{
+		path: "/",
+		component: GameLayout,
+		children: [
+			{
+				path: "explore",
+				name: "explore",
+				component: ExploreView,
 			},
 		],
 	},

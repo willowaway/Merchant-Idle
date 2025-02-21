@@ -29,7 +29,7 @@
 		"bootstrap": "5.3.3",
 		"class-transformer": "^0.5.1",
 		"dotenv": "^16.4.7",
-		"merchant-idle-middleware": "^1.5.1",
+		"merchant-idle-middleware": "^1.5.2",
 		"nprogress": "^0.2.0",
 		"pinia": "^2.2.4",
 		"simplebar": "^6.2.7",

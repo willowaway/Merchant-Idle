@@ -1,6 +1,6 @@
 {
 	"name": "merchant-idle-middleware",
-	"version": "1.5.1",
+	"version": "1.5.2",
 	"description": "Merchant Idle shared resources between the backend and frontend",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",

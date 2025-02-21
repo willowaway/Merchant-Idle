@@ -13,7 +13,7 @@ const store = useTemplateStore();
 				<div class="content py-3">
 					<div class="row fs-sm">
 						<div
-							class="col-sm-6 order-sm-2 py-1 text-center text-sm-end"
+							class="d-none d-sm-block col-sm-6 order-sm-2 py-1 text-center text-sm-end"
 						>
 							<slot name="content-right">
 								Crafted with

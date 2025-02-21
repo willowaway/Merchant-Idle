@@ -1,4 +1,8 @@
-import { EquipmentItemView, type User } from "merchant-idle-middleware";
+import {
+	EquipmentItemView,
+	StashItemView,
+	type User,
+} from "merchant-idle-middleware";
 import { defineStore } from "pinia";
 
 interface IApplicationState {
@@ -16,6 +20,7 @@ interface IApplicationState {
 	boots: EquipmentItemView | undefined;
 	ring: EquipmentItemView | undefined;
 	bracelet: EquipmentItemView | undefined;
+	stashItemDetails: StashItemView | undefined;
 }
 
 const initialState: IApplicationState = {
@@ -33,6 +38,7 @@ const initialState: IApplicationState = {
 	boots: undefined,
 	ring: undefined,
 	bracelet: undefined,
+	stashItemDetails: undefined,
 };
 
 export const useMainStore = defineStore("main", {
@@ -47,101 +53,127 @@ export const useMainStore = defineStore("main", {
 		unequip(equipment: EquipmentItemView) {
 			if (equipment.armourSlot) {
 				switch (equipment.armourSlot) {
-					case "Helmet":
-						this.helmet = undefined;
-						break;
-					case "Necklace":
-						this.necklace = undefined;
-						break;
-					case "Chest":
-						this.chest = undefined;
-						break;
-					case "Offhand":
-						this.offhand = undefined;
-					case "Legs":
-						this.legs = undefined;
-						break;
-					case "Gloves":
-						this.gloves = undefined;
-						break;
-					case "Boots":
-						this.boots = undefined;
-						break;
-					case "Ring":
-						this.ring = undefined;
-						break;
-					case "Bracelet":
-						this.bracelet = undefined;
-						break;
-					default:
-						console.error(
-							`Armour slot not defined for ${equipment.name}`
-						);
-						break;
+				case "Helmet":
+					this.helmet = undefined;
+					break;
+				case "Necklace":
+					this.necklace = undefined;
+					break;
+				case "Chest":
+					this.chest = undefined;
+					break;
+				case "Offhand":
+					this.offhand = undefined;
+					break;
+				case "Legs":
+					this.legs = undefined;
+					break;
+				case "Gloves":
+					this.gloves = undefined;
+					break;
+				case "Boots":
+					this.boots = undefined;
+					break;
+				case "Ring":
+					this.ring = undefined;
+					break;
+				case "Bracelet":
+					this.bracelet = undefined;
+					break;
+				default:
+					console.error(
+						`Armour slot not defined for ${equipment.name}`
+					);
+					break;
 				}
 			} else if (equipment.weaponSlot) {
 				switch (equipment.weaponSlot) {
-					case "Weapon":
-						this.weapon = undefined;
-						break;
-					default:
-						console.error(
-							`Weapon slot not defined for ${equipment.name}`
-						);
-						break;
+				case "Weapon":
+					this.weapon = undefined;
+					break;
+				default:
+					console.error(
+						`Weapon slot not defined for ${equipment.name}`
+					);
+					break;
 				}
 			} else {
 				console.error(
 					`Equipment slot not defined for ${equipment.name}`
 				);
 			}
+
+			if (
+				this.stashItemDetails &&
+				equipment.stashId === this.stashItemDetails.id
+			) {
+				this.stashItemDetails = undefined;
+			}
+		},
+		isEquipped(stashItem: StashItemView): boolean {
+			if (
+				this.helmet?.stashId === stashItem.id ||
+				this.necklace?.stashId === stashItem.id ||
+				this.chest?.stashId === stashItem.id ||
+				this.weapon?.stashId === stashItem.id ||
+				this.offhand?.stashId === stashItem.id ||
+				this.legs?.stashId === stashItem.id ||
+				this.gloves?.stashId === stashItem.id ||
+				this.ring?.stashId === stashItem.id ||
+				this.boots?.stashId === stashItem.id ||
+				this.bracelet?.stashId === stashItem.id
+			) {
+				return true;
+			} else {
+				return false;
+			}
 		},
 		equip(equipment: EquipmentItemView) {
 			if (equipment.armourSlot) {
 				switch (equipment.armourSlot) {
-					case "Helmet":
-						this.helmet = equipment;
-						break;
-					case "Necklace":
-						this.necklace = equipment;
-						break;
-					case "Chest":
-						this.chest = equipment;
-						break;
-					case "Offhand":
-						this.offhand = equipment;
-						break;
-					case "Legs":
-						this.legs = equipment;
-						break;
-					case "Gloves":
-						this.gloves = equipment;
-						break;
-					case "Boots":
-						this.boots = equipment;
-						break;
-					case "Ring":
-						this.ring = equipment;
-						break;
-					case "Bracelet":
-						this.bracelet = equipment;
-						break;
-					default:
-						console.error(
-							`Armour slot not defined for ${equipment.name}`
-						);
-						break;
+				case "Helmet":
+					this.helmet = equipment;
+					break;
+				case "Necklace":
+					this.necklace = equipment;
+					break;
+				case "Chest":
+					this.chest = equipment;
+					break;
+				case "Offhand":
+					this.offhand = equipment;
+					break;
+				case "Legs":
+					this.legs = equipment;
+					break;
+				case "Gloves":
+					this.gloves = equipment;
+					break;
+				case "Boots":
+					this.boots = equipment;
+					break;
+				case "Ring":
+					this.ring = equipment;
+					break;
+				case "Bracelet":
+					this.bracelet = equipment;
+					break;
+				default:
+					console.error(
+						`Armour slot not defined for ${equipment.name}`
+					);
+					break;
 				}
 			} else if (equipment.weaponSlot) {
 				switch (equipment.weaponSlot) {
-					case "Weapon":
-						this.weapon = equipment;
-						break;
-					default:
-						console.error(
-							`Weapon slot not defined for ${equipment.name}`
-						);
-						break;
+				case "Weapon":
+					this.weapon = equipment;
+					break;
+				default:
+					console.error(
+						`Weapon slot not defined for ${equipment.name}`
+					);
+					break;
 				}
 			} else {
 				console.error(

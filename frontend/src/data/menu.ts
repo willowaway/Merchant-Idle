@@ -6,6 +6,7 @@
 import type { Node } from "@/interfaces/Node";
 import chestImg from "/assets/media/Icons/Stash.png";
 import coinImg from "/assets/media/Icons/Coin.png";
+import exploreImg from "/assets/media/Icons/Swords.png";
 
 const menu: Array<Node> = [
 	{
@@ -17,6 +18,11 @@ const menu: Array<Node> = [
 		name: "Shop",
 		to: "shop",
 		src: coinImg,
+	},
+	{
+		name: "Explore",
+		to: "explore",
+		src: exploreImg,
 	},
 ];
 
